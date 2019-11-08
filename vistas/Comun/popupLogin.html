@@ -1,0 +1,46 @@
+
+
+  <div id="inicio_modal" class="modal">
+  
+  <div class="modal-content animate" style="width: 50%">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('inicio_modal').style.display='none'" class="close" title="Close Modal">&times;</span>
+    </div>
+
+    <div class="container">
+      <form action="javascript:ingresar()">
+        <label for="uname"><b>Usuario</b></label>
+        <input type="text" placeholder="Enter Username" id="uname" required>
+
+        <label for="psw"><b>Contraseña</b></label>
+        <input type="password" placeholder="Enter Password" id="psw" required>
+
+        <div id="msg_inicio" style="width: 100%;align-content: center;"></div>
+          
+        <button type="submit" class="search-domain btn btn-primary px-5" style="margin-top: 30px">Login</button>
+        <label>
+          <input type="checkbox" checked="checked" name="remember"> Recordarme
+        </label>
+      </form>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <table style="width: 100%">
+        <tr>
+          <td rowspan="2">
+            <button type="button" onclick="document.getElementById('inicio_modal').style.display='none'" class="cancelbtn">Cancelar</button>
+          </td>
+          <td>
+            <span class="psw"><a href="registroUsuario.php">Registrarme</a></span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="psw"><a href="#">¿Olvidaste tu contraseña?</a></span>
+          </td>
+        </tr>
+      </table>
+      
+      
+    </div>
+  </div>

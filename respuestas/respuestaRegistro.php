@@ -9,6 +9,6 @@ include ("../mapeo/ServicioCliente.php");
 
 $sC = new ServicioCliente();
 $result = $sC->addClient($nombre,$edad,$clave,$nom_user);
-echo 'ok';
+echo 'Ok';
 
 ?>

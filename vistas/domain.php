@@ -49,10 +49,7 @@
     <!-- END nav -->
     
     <!-- <div class="js-fullheight"> -->
-    <div class="hero-wrap">
-      <div class="overlay"></div>
-      <div class="circle-bg"></div>
-      <div class="circle-bg-2"></div>
+    <div id="base" style="background-image: url('../images/fondo.png'); background-size: 100% 100%;">
       <div class="container-fluid">
         <div class="row no-gutters d-flex slider-text align-items-center justify-content-center" data-scrollax-parent="true">
           <div class="col-md-6 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
@@ -126,94 +123,6 @@
     		</div>
     	</div>
     </section>
-
-    <!-- <section class="ftco-section bg-light">
-    	<div class="container">
-    		<div class="row justify-content-center mb-5">
-          <div class="col-md-7 text-center heading-section ftco-animate">
-            <span class="subheading">Facts</span>
-            <h2 class="mb-4">Your Question</h2>
-          </div>
-        </div>
-    		<div class="row">
-    			<div class="col-md-12">
-    				<div id="accordion">
-    					<div class="row">
-    						<div class="col-md-6">
-    							<div class="card">
-						        <div class="card-header">
-										  <a class="card-link" data-toggle="collapse"  href="#menuone" aria-expanded="true" aria-controls="menuone">What is your domain name? <span class="collapsed"><i class="icon-plus-circle"></i></span><span class="expanded"><i class="icon-minus-circle"></i></span></a>
-						        </div>
-						        <div id="menuone" class="collapse show">
-						          <div class="card-body">
-												<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-						          </div>
-						        </div>
-						      </div>
-
-						      <div class="card">
-						        <div class="card-header">
-										  <a class="card-link" data-toggle="collapse"  href="#menutwo" aria-expanded="false" aria-controls="menutwo">How long is my domain name valid? <span class="collapsed"><i class="icon-plus-circle"></i></span><span class="expanded"><i class="icon-minus-circle"></i></span></a>
-						        </div>
-						        <div id="menutwo" class="collapse">
-						          <div class="card-body">
-												<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-						          </div>
-						        </div>
-						      </div>
-
-						      <div class="card">
-						        <div class="card-header">
-										  <a class="card-link" data-toggle="collapse"  href="#menu3" aria-expanded="false" aria-controls="menu3">Can I sell my domain name? <span class="collapsed"><i class="icon-plus-circle"></i></span><span class="expanded"><i class="icon-minus-circle"></i></span></a>
-						        </div>
-						        <div id="menu3" class="collapse">
-						          <div class="card-body">
-												<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-						          </div>
-						        </div>
-						      </div>
-    						</div>
-
-    						<div class="col-md-6">
-    							<div class="card">
-						        <div class="card-header">
-										  <a class="card-link" data-toggle="collapse"  href="#menu4" aria-expanded="false" aria-controls="menu4">Can I cancel a domain? <span class="collapsed"><i class="icon-plus-circle"></i></span><span class="expanded"><i class="icon-minus-circle"></i></span></a>
-						        </div>
-						        <div id="menu4" class="collapse">
-						          <div class="card-body">
-												<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-						          </div>
-						        </div>
-						      </div>
-
-						      <div class="card">
-						        <div class="card-header">
-										  <a class="card-link" data-toggle="collapse"  href="#menu5" aria-expanded="false" aria-controls="menu5">How do I transfer a domain name? <span class="collapsed"><i class="icon-plus-circle"></i></span><span class="expanded"><i class="icon-minus-circle"></i></span></a>
-						        </div>
-						        <div id="menu5" class="collapse">
-						          <div class="card-body">
-												<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-						          </div>
-						        </div>
-						      </div>
-
-						      <div class="card">
-						        <div class="card-header">
-										  <a class="card-link" data-toggle="collapse"  href="#menu6" aria-expanded="false" aria-controls="menu6">How do I setup URL forwarding? <span class="collapsed"><i class="icon-plus-circle"></i></span><span class="expanded"><i class="icon-minus-circle"></i></span></a>
-						        </div>
-						        <div id="menu6" class="collapse">
-						          <div class="card-body">
-												<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-						          </div>
-						        </div>
-						      </div>
-    						</div>
-    					</div>
-				    </div>
-    			</div>
-    		</div>
-    	</div>
-    </section>-->
 
 
    <?php include("Comun/footer.html"); ?>

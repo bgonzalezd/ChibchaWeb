@@ -100,15 +100,11 @@
     </style>
   </head>
   <body>
-    
   <?php include("Comun/verificarSesionComun.php"); ?>
     <!-- END nav -->
     
     <!-- <div class="js-fullheight"> -->
-    <div class="hero-wrap" style="max-height: 180px">
-      <div class="overlay"></div>
-      <div class="circle-bg"></div>
-      <div class="circle-bg-2"></div>
+    <div id="base" style="background-image: url('../images/fondo.png'); background-size: 100% 100%;">
       
     </div>
 

@@ -15,3 +15,12 @@
 <script src="../js/google-map.js"></script>
 <script src="../js/main.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+      $(document).ready(function(){
+        var nav = $('#ftco-navbar');
+        var aux = parseInt(nav.css("padding-top").split("px")[0]);
+        var aux2 = parseInt(nav.css("padding-bottom").split("px")[0]);
+        $('#base').css('padding-top',(nav.height()+aux+aux2)+'px');
+        
+      });
+    </script>

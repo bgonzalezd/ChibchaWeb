@@ -7,14 +7,10 @@
   </head>
   <body>
     
-  
   <?php include("Comun/menu.html"); ?>
     <!-- END nav -->
     
-    <div class="hero-wrap">
-      <div class="overlay"></div>
-      <div class="circle-bg"></div>
-      <div class="circle-bg-2"></div>
+    <div id="base" style="background-image: url('../images/fondo.png'); background-size: 100% 100%;">
       <div class="container-fluid">
         <div class="slider-text d-md-flex align-items-center" data-scrollax-parent="true">
 

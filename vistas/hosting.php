@@ -10,10 +10,7 @@
     <!-- END nav -->
     
     <!-- <div class="js-fullheight"> -->
-    <div class="hero-wrap">
-      <div class="overlay"></div>
-      <div class="circle-bg"></div>
-      <div class="circle-bg-2"></div>
+    <div id="base" style="background-image: url('../images/fondo.png'); background-size: 100% 100%;">
       <div class="container-fluid">
         <div class="row no-gutters d-flex slider-text align-items-center justify-content-center" data-scrollax-parent="true">
           <div class="col-md-6 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">

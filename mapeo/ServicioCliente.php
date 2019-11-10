@@ -40,6 +40,17 @@ class ServicioCliente{
 		$sql = "INSERT INTO CLIENTE VALUES (NULL,'$nombre',$edad,'$clave','$nom_user');";
 		$result = $this->conexion->query($sql);
 	}
+	public function getInfoClient($codigo){
+		$sql = "SELECT * FROM CLIENTE WHERE codigo = $codigo;";
+		$result = $this->conexion->query($sql);
+		if ($result->num_rows > 0) {
+	    // output data of each row
+		    while($row = $result->fetch_assoc()) {
+		    	$cliente = new Cliente($row['codigo'],$row['nombre'],$row['edad'],$row['clave'],$row['nom_usuario']);
+		    }
+		}
+		return $cliente;
+	}
 
 }
 

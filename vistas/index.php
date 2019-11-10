@@ -80,72 +80,67 @@
     </section>
 
     <section class="ftco-section bg-light">
-    	<div class="container">
-    		<div class="row justify-content-center mb-5 pb-5">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-5">
           <div class="col-md-7 text-center heading-section ftco-animate">
-            <span class="subheading">Planes principales</span>
-            <h2 class="mb-4">Nuestros mejores hostings</h2>
+            <span class="subheading">Precios</span>
+            <h2 class="mb-4">Nuestros mejores precios</h2>
           </div>
         </div>
-    		<div class="row">
-	        <div class="col-md-3 ftco-animate">
-	          <div class="block-7">
-	            <div class="text-center">
-	            <h2 class="heading">Plata</h2>
-	            <span class="price"><sup>$</sup> <span class="number">25.000</span></span>
-	            <span class="excerpt d-block">Mas economico</span>
-	            <a href="https://biz.payulatam.com/B0c9270D35E7979"><img src="http://www.payulatam.com/img-secure-2015/boton_pagar_grande.png"></a>
-
-              <br>
-	            
-	            <h3 class="heading-2 mb-3">Disfruta de las siguientes características</h3>
-	            
-	            <ul class="pricing-text">
-	              <li><strong>250 GB</strong> Banda ancha</li>
-	              <li><strong>200 GB</strong> Capacidad de almacenamiento</li>
-	              <li><strong>1</strong> Base de datos MySQL</li>
-	            </ul>
-	            </div>
-	          </div>
-	        </div>
-	        <div class="col-md-3 ftco-animate">
-	          <div class="block-7">
-	            <div class="text-center">
-	            <h2 class="heading">Oro</h2>
-	            <span class="price"><sup>$</sup> <span class="number">50.000</span></span>
-	            <span class="excerpt d-block">Medio</span>
-	            <a href="https://biz.payulatam.com/B0c9270D35E7979"><img src="http://www.payulatam.com/img-secure-2015/boton_pagar_grande.png"></a>
-	            
-	            <h3 class="heading-2 mb-3">Disfruta de las siguientes características</h3>
-	            
-	            <ul class="pricing-text">
-	              <li><strong>450 GB</strong> Banda ancha</li>
-	              <li><strong>400 GB</strong> Capacidad de almacenamiento</li>
-	              <li><strong>$2.00 / GB</strong> Base de datos MySQL</li>
-	            </ul>
-	            </div>
-	          </div>
-	        </div>
-	        <div class="col-md-3 ftco-animate">
-	          <div class="block-7">
-	            <div class="text-center">
-	            <h2 class="heading">Platino</h2>
-	            <span class="price"><sup>$</sup> <span class="number">75.000</span></span>
-	            <span class="excerpt d-block">Lo mejor de lo mejor</span>
-	            <a href="https://biz.payulatam.com/B0c9270D35E7979"><img src="http://www.payulatam.com/img-secure-2015/boton_pagar_grande.png"></a>
-	            
-	            <h3 class="heading-2 mb-3">Disfruta de las siguientes características</h3>
-	            
-	            <ul class="pricing-text">
-	              <li><strong>1000 GB</strong> Banda ancha</li>
-	              <li><strong>800 GB</strong> Capacidad de almacenamiento</li>
-	              <li><strong>4</strong> Base de datos MySQL</li>
-	            </ul>
-	            </div>
-	          </div>
-	        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="block-7">
+              <div class="text-center">
+              <h2 class="heading">Plata</h2>
+              <span class="price"><sup>$</sup> <span class="number">25.000 / mes</span></span>
+              <a href="#" class="btn btn-primary d-block px-3 py-3 mb-4">Comprar</a>
+              
+              <h3 class="heading-2 mb-3">Disfruta de las siguientes características</h3>
+              
+              <ul class="pricing-text">
+                <li><strong>250 GB</strong> Banda ancha</li>
+                <li><strong>200 GB</strong> Capacidad de almacenamiento</li>
+                <li><strong>1</strong> Base de datos MySQL</li>
+              </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="block-7">
+              <div class="text-center">
+              <h2 class="heading">Oro</h2>
+              <span class="price"><sup>$</sup> <span class="number">50.000 / mes</span></span>
+              <a href="#" class="btn btn-primary d-block px-3 py-3 mb-4">Comprar</a>
+              
+              <h3 class="heading-2 mb-3">Disfruta de las siguientes características</h3>
+              
+              <ul class="pricing-text">
+                <li><strong>450 GB</strong> Banda ancha</li>
+                <li><strong>400 GB</strong> Capacidad de almacenamiento</li>
+                <li><strong>4</strong> Base de datos MySQL</li>
+              </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+           <div class="block-7">
+              <div class="text-center">
+              <h2 class="heading">Platino</h2>
+              <span class="price"><sup>$</sup> <span class="number">75.000 / mes</span></span>
+              <a href="#" class="btn btn-primary d-block px-3 py-3 mb-4">Comprar</a>
+              
+              <h3 class="heading-2 mb-3">Disfruta de las siguientes características</h3>
+              
+              <ul class="pricing-text">
+                <li><strong>1000 GB</strong> Banda ancha</li>
+                <li><strong>800 GB</strong> Capacidad de almacenamiento</li>
+                <li><strong>10</strong> Base de datos MySQL</li>
+              </ul>
+              </div>
+            </div>
+          </div>
         </div>
-    	</div>
+      </div>
     </section>
 
     <section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url(../images/bg_1.jpg);">

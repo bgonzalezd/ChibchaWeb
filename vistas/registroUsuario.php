@@ -58,7 +58,12 @@ input[type=submit]:hover {
             });
              
             request.done(function( msg ) {
-              alert('Agregado correctamente');
+              if(msg == 'false'){
+                alert('Usuario ya existe');
+              }else{
+                alert('Agregado correctamente');
+              }
+              
             });
              
             request.fail(function( jqXHR, textStatus ) {

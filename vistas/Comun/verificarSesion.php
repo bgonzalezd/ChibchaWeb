@@ -1,7 +1,6 @@
 <?php
-	session_start();
-	$codigo = $_SESSION['cod_user'];
-	if ($codigo == null){
+	if (session_id() == '') {
+	  
 		header('Location: '. 'index.php');
 	}
 ?>

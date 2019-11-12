@@ -1,9 +1,8 @@
 <?php
-	session_start();
-	$codigo = $_SESSION['cod_user'];
-	if ($codigo != null){
-		include("menu.html");
-	}else{
+	if (session_id() == '') {
+	  
 		include("menuSinSesion.html");
+	}else{
+		include("menu.html");
 	}
 ?>

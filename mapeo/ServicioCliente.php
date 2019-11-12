@@ -8,16 +8,17 @@ class ServicioCliente{
 
 	public function __construct() {
 		$this->conexion = conectar();
+		$this->config = getConfig();
+		$this->columns = 'codigo int,nombre varchar(60),edad int,clave varchar(50),nom_usuario varchar(50)';
     }
 
 	public function getAll(){
-		$sql = "SELECT * FROM CLIENTE;";
-		$result = $this->conexion->query($sql);
+		$result = pg_query($this->conexion, "SELECT * FROM CLIENTE UNION SELECT * FROM  dblink('$this->config','SELECT * FROM CLIENTE') as resultado($this->columns) ORDER BY codigo;");
 		$arr = array();
-		if ($result->num_rows > 0) {
+		if ($result) {
 	    // output data of each row
-		    while($row = $result->fetch_assoc()) {
-		    	$cliente = new Cliente($row['codigo'],$row['nombre'],$row['edad'],$row['clave'],$row['nom_usuario']);
+		    while($row = pg_fetch_row($result)) {
+		    	$cliente = new Cliente($row[0],$row[1],$row[2],$row[3],$row[4]);
 		    	array_push($arr,$cliente);
 		    }
 		}
@@ -25,28 +26,40 @@ class ServicioCliente{
 	}
 
 	public function getClientUsername($nom_usuario){
-		$sql = "SELECT * FROM CLIENTE WHERE nom_usuario = '$nom_usuario';";
-		$result = $this->conexion->query($sql);
-		if ($result->num_rows > 0) {
-	    // output data of each row
-		    while($row = $result->fetch_assoc()) {
-		    	$cliente = new Cliente($row['codigo'],$row['nombre'],$row['edad'],$row['clave'],$row['nom_usuario']);
-		    }
+		$result = pg_query($this->conexion, "SELECT * FROM (SELECT * FROM CLIENTE UNION SELECT * FROM  dblink('$this->config','SELECT * FROM CLIENTE') as resultado($this->columns)) AS res WHERE nom_usuario = '$nom_usuario' ORDER BY codigo;");
+		$cliente = null;
+
+		if ($result){
+			while ($row = pg_fetch_row($result)) {
+				$cliente = new Cliente($row[0],$row[1],$row[2],$row[3],$row[4]);
+
+			}
 		}
 		return $cliente;
 	}
 
 	public function addClient($nombre, $edad, $clave, $nom_user){
-		$sql = "INSERT INTO CLIENTE VALUES (NULL,'$nombre',$edad,'$clave','$nom_user');";
-		$result = $this->conexion->query($sql);
+		$u = $this->getClientUsername($nom_user);
+		if($u == null){
+			if(agregarEnTabla1($this->conexion,'CLIENTE',$this->columns)){
+				$result = pg_query($this->conexion, "INSERT INTO CLIENTE VALUES (nextval('llavecliente'),'$nombre',$edad,'$clave','$nom_user');");
+			}else{
+				$result = pg_query($this->conexion, "SELECT dblink('$this->config','INSERT INTO CLIENTE VALUES (nextval(''llavecliente''),''$nombre'',$edad,''$clave'',''$nom_user'');');");
+			}
+			return "true";
+		}else{
+			return "false";
+		}
+		
+		/*$result = pg_query($this->conexion, "INSERT INTO CLIENTE VALUES (NULL,'$nombre',$edad,'$clave','$nom_user');");
+		$result = $this->conexion->query($sql);*/
 	}
 	public function getInfoClient($codigo){
-		$sql = "SELECT * FROM CLIENTE WHERE codigo = $codigo;";
-		$result = $this->conexion->query($sql);
-		if ($result->num_rows > 0) {
+		$result = pg_query($this->conexion, "SELECT * FROM (SELECT * FROM CLIENTE UNION SELECT * FROM  dblink('$this->config','SELECT * FROM CLIENTE') as resultado($this->columns)) AS res WHERE codigo = $codigo ORDER BY codigo;");
+		if ($result) {
 	    // output data of each row
-		    while($row = $result->fetch_assoc()) {
-		    	$cliente = new Cliente($row['codigo'],$row['nombre'],$row['edad'],$row['clave'],$row['nom_usuario']);
+		    while($row = pg_fetch_row($result)) {
+		    	$cliente = new Cliente($row[0],$row[1],$row[2],$row[3],$row[4]);
 		    }
 		}
 		return $cliente;

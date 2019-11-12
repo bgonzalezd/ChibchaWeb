@@ -1,7 +1,7 @@
 <?php
-	session_start();
-	$codigo = $_SESSION['cod_user'];
-	if ($codigo == null){
+	if (session_id() == '') {
+	  
 		include("popupLogin.html");
 	}
+
 ?>

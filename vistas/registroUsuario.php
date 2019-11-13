@@ -98,6 +98,8 @@ input[type=submit]:hover {
                 <label for="edad" class="etiqueta">Edad</label>
                 <input type="text" required oninput="this.value = this.value.replace(/[^0-9]/, '')" maxlength="2" id="edad" name="edad_n" placeholder="Tu edad..">
               
+                <label for="email" class="etiqueta">E-mail</label>
+                <input type="text" required id="email" name="nemail" placeholder="Tu e-mail..">
 
                 <label for="usuario" class="etiqueta">Nombre de usuario</label>
                 <input type="text" required id="usuario" name="nusuario" placeholder="Tu nombre de usuario..">

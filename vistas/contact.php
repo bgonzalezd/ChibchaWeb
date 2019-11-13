@@ -45,12 +45,17 @@
         <div class="row block-9">
           <div class="col-md-6 pr-md-5">
             <form action="#">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Tu Nombre">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Tu Email">
-              </div>
+
+              <?php
+                if (!(isset($_SESSION['cod_user']) && !empty($_SESSION['cod_user']))) {
+                  ?>
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Tu Email">
+                    </div>
+                  <?php
+                }
+
+              ?>
               <div class="form-group">
                 <input type="text" class="form-control" placeholder="Asunto">
               </div>

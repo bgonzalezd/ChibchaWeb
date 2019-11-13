@@ -5,10 +5,10 @@ $edad = $_POST['edad'];
 $clave = $_POST['clave'];
 $nom_user = $_POST['nom_user'];
 
-include ("../mapeo/ServicioCliente.php");
+include ("../mapeo/ServicioUsuario.php");
 
-$sC = new ServicioCliente();
-$result = $sC->addClient($nombre,$edad,$clave,$nom_user);
+$sC = new ServicioUsuario();
+$result = $sC->addUsuario($nombre,$edad,$clave,$nom_user);
 
 echo $result;
 

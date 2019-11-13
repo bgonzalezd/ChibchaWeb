@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<?php session_start();?>
+<?php session_start();
+  include ("../mapeo/ServicioUsuario.php");?>
 <html lang="en">
   <head>
     <title>CHIBCHA WEB</title>
-    <?php include("Comun/verificarSesion.php");?>
     <?php include("Comun/head.html"); ?>
   </head>
   <body>
     
-  <?php include("Comun/menu.html"); ?>
+    <?php include("Comun/verificarSesion.php");?>
     <!-- END nav -->
     
     <div id="base" style="background-image: url('../images/fondo.png'); background-size: 100% 100%;">

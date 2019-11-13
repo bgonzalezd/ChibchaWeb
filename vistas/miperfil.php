@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<?php session_start();?>
+<?php session_start();
+  include ("../mapeo/ServicioUsuario.php");?>
 <html lang="en">
   <head>
-    <?php include("../mapeo/ServicioCliente.php")?>
     <title>Mi perfil</title>
     <?php include("Comun/head.html"); ?>
     <style type="text/css">
@@ -124,8 +124,8 @@
                     <div class="col-md-6">
                         <div class="profile-head">
                                     <?php
-                                        $sc = new ServicioCliente();
-                                        $cli = $sc->getInfoClient($_SESSION['cod_user']);
+                                        $sc = new ServicioUsuario();
+                                        $cli = $sc->getInfoUsuario($_SESSION['cod_user']);
                                     ?>
                                     <h5>
                                         <?php echo $cli->nombre ?>

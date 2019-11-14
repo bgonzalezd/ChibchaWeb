@@ -54,6 +54,7 @@ class ServicioUsuario{
 	}
 	public function getInfoUsuario($codigo){
 		$result = pg_query($this->conexion, "SELECT * FROM (SELECT * FROM USUARIO UNION SELECT * FROM  dblink('$this->config','SELECT * FROM USUARIO') as resultado($this->columns)) AS res WHERE codigo = $codigo ORDER BY codigo;");
+		$cliente = null;
 		if ($result) {
 	    // output data of each row
 		    while($row = pg_fetch_row($result)) {

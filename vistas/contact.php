@@ -4,6 +4,29 @@
   <head>
     <title>Contacto</title>
     <?php include("Comun/head.html"); ?>
+    <script type="text/javascript">
+      function enviarMensaje(){
+        $(document).ready(function(){
+          var asunto = $('#asunto').val().trim();
+          var mensaje = $('#mensaje').val().trim();
+          var request = $.ajax({
+              url: "../respuestas/respuestaEnviarMensaje.php",
+              method: "POST",
+              data: { asunto : asunto , mensaje : mensaje }
+            });
+             
+          request.done(function( msg ) {
+            alert("Mensaje enviado correctamente");
+            $('#asunto').val('');
+            $('#mensaje').val('');
+          });
+           
+          request.fail(function( jqXHR, textStatus ) {
+            console.log( "Request failed: " + textStatus );
+          });
+        });
+      }
+    </script>
   </head>
   <body>
     
@@ -44,23 +67,23 @@
         </div>
         <div class="row block-9">
           <div class="col-md-6 pr-md-5">
-            <form action="#">
+            <form action="javascript:enviarMensaje()">
 
-              <?php
-                if (!(isset($_SESSION['cod_user']) && !empty($_SESSION['cod_user']))) {
+              <!--<?php
+                /*if (!(isset($_SESSION['cod_user']) && !empty($_SESSION['cod_user']))) {
                   ?>
                     <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Tu Email">
+                      <input type="text" id="email" class="form-control" placeholder="Tu Email">
                     </div>
                   <?php
-                }
+                }*/
 
-              ?>
+              ?>-->
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Asunto">
+                <input type="text" id="asunto" class="form-control" placeholder="Asunto">
               </div>
               <div class="form-group">
-                <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Mensaje"></textarea>
+                <textarea name="" id="mensaje" cols="30" rows="7" class="form-control" placeholder="Mensaje"></textarea>
               </div>
               <div class="form-group">
                 <input type="submit" value="Enviar Mensaje" class="btn btn-primary py-3 px-5">

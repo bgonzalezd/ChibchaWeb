@@ -1,10 +1,9 @@
 <?php
 
 class Mensaje{
-	public function __construct($codigo, $cod_usuario, $email, $asunto, $mensaje, $fecha) {
+	public function __construct($codigo, $cod_usuario, $asunto, $mensaje, $fecha) {
 		$this->codigo = $codigo;
 		$this->cod_usuario = $cod_usuario;
-		$this->email = $email;
 		$this->asunto = $asunto;
 		$this->mensaje = $mensaje;
 		$this->fecha = $fecha;

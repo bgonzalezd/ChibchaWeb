@@ -7,7 +7,7 @@
   </head>
   <body>
     
-  <?php include("Comun/verificarSesionComun.php"); ?>
+  <?php include("Comun/verificarSesion.php"); ?>
     <!-- END nav -->
     
     <!-- <div class="js-fullheight"> -->
@@ -75,7 +75,6 @@
     </section>
 
     <?php include("Comun/footer.html"); ?>
-   <?php include("Comun/verificarSesionComun2.php"); ?>
     
   
 

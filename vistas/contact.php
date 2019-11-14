@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<?php session_start();?>
+<?php session_start();
+  include ("../mapeo/ServicioUsuario.php");?>
 <html lang="en">
   <head>
     <title>Contacto</title>

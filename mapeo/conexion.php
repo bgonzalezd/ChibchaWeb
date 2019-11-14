@@ -5,11 +5,12 @@
 function conectar()
 {
 
-    $server   = "localhost";
+    $server   = "13.82.134.144";
     $database = "chibchaweb1";
     $name     = "postgres";
-    $pass     = "12345678";
-    $con      = pg_connect("host=$server dbname=$database user=$name password=$pass");
+    $pass     = "ANDRES2018uebS3";
+    $port 	  = '5432';
+    $con      = pg_connect("host=$server dbname=$database port=$port user=$name password=$pass");
     if (!$con) {
         die("Conexion fallida: " . mysqli_connect_error());
         
@@ -18,7 +19,7 @@ function conectar()
 }
 
 function getConfig(){
-	return 'dbname=chibchaweb2 user=postgres password=12345678';
+	return 'dbname=chibchaweb2 port=5432 host=52.191.198.186 user=postgres password=ANDRES2018uebS3';
 }
 
 function agregarEnTabla1($conexion,$tabla,$columns){

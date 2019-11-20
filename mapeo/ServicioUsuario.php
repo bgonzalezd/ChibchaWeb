@@ -1,7 +1,7 @@
 <?php
 
 include ('../modelo/Usuario.php');
-include ('conexion.php');
+require_once ('conexion.php');
 
 class ServicioUsuario{
 
@@ -38,13 +38,13 @@ class ServicioUsuario{
 		return $cliente;
 	}
 
-	public function addUsuario($nombre, $edad, $clave, $nom_user){
+	public function addUsuario($nombre, $edad, $clave, $nom_user,$email){
 		$u = $this->getUserUsername($nom_user);
 		if($u == null){
 			if(agregarEnTabla1($this->conexion,'USUARIO',$this->columns)){
-				$result = pg_query($this->conexion, "INSERT INTO USUARIO VALUES (nextval('llaveusuario'),'$nombre',$edad,'$clave','$nom_user');");
+				$result = pg_query($this->conexion, "INSERT INTO USUARIO VALUES (nextval('llaveusuario'),'$nombre',$edad,'$clave','$nom_user','N','$email');");
 			}else{
-				$result = pg_query($this->conexion, "SELECT dblink('$this->config','INSERT INTO USUARIO VALUES (nextval(''llaveusuario''),''$nombre'',$edad,''$clave'',''$nom_user'');');");
+				$result = pg_query($this->conexion, "SELECT dblink('$this->config','INSERT INTO USUARIO VALUES (nextval(''llaveusuario''),''$nombre'',$edad,''$clave'',''$nom_user'',''N'',''$email'');');");
 			}
 			return "true";
 		}else{

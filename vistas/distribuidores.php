@@ -13,23 +13,14 @@ table {
   width: 100%;
   border: 1px solid #ddd;
 }
-.vl {
-  background-color: black;
-  background-size: 90% 90%
-}
 
 th, td {
   text-align: left;
   color: black;
   padding: 8px;
 }
-
 ::-webkit-scrollbar{
   display: none;
-}
-.fila:hover{
-  border-style: solid;
-  border-color: black;
 }
 
 tr:nth-child(even){background-color: #f2f2f2}
@@ -52,19 +43,7 @@ tr:nth-child(even){background-color: #f2f2f2}
               <table>
                 <?php
 
-                    $sm = new ServicioMensaje();
-                    $su = new ServicioUsuario();
-                    $arr = $sm->getAll();
-                    foreach ($arr as $mensaje){
-                      $cli = $su->getInfoUsuario($mensaje->cod_usuario);
-                      ?>
-                        <tr class="fila">
-                          <td><?php echo $cli->nombre; ?></td>
-                          <td class="vl"><div style="width: 2px"></div></td>
-                          <td><?php echo $mensaje->asunto; ?></td>
-                        </tr>
-                      <?php
-                    }
+                    
                 ?>
               </table>
             </div>   

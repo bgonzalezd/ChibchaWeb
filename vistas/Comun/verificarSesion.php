@@ -6,9 +6,9 @@
 	  	$ser = new ServicioUsuario();
 	  	$us = $ser->getInfoUsuario($_SESSION['cod_user']);
 	  	if($us->tipo_usuario == 'A'){
-	  		include("menuAdmin.html");
+	  		header('Location: '. 'distribuidores.php');
 	  	}else{
-	  		include("menu.html");
+	  		header('Location: '. 'hosting.php');
 	  	}
 	}
 ?>

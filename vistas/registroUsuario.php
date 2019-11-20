@@ -48,13 +48,14 @@ input[type=submit]:hover {
         var nom = $('#fname').val().trim();
         var edad = $('#edad').val();
         var user = $('#usuario').val();
+        var email = $('#email').val();
         var c1 = $('#clave').val().trim();
         var c2 = $('#clave2').val().trim();
         if(c1.localeCompare(c2)==0){
           var request = $.ajax({
               url: "../respuestas/respuestaRegistro.php",
               method: "POST",
-              data: { nombre : nom , edad : edad , clave : c1 , nom_user : user }
+              data: { nombre : nom , edad : edad , clave : c1 , nom_user : user , email : email}
             });
              
             request.done(function( msg ) {
@@ -62,6 +63,7 @@ input[type=submit]:hover {
                 alert('Usuario ya existe');
               }else{
                 alert('Agregado correctamente');
+                window.location.href = "index.php";
               }
               
             });

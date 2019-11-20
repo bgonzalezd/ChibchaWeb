@@ -1,7 +1,7 @@
 <?php
 
 include ('../modelo/Mensaje.php');
-include ('conexion.php');
+require_once ('conexion.php');
 
 class ServicioMensaje{
 

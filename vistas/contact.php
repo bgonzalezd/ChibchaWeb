@@ -31,7 +31,7 @@
   </head>
   <body>
     
-  <?php include("Comun/verificarSesion.php"); ?>
+  <?php include("Comun/verificarSesionNormal.php"); ?>
     <!-- END nav -->
     
     <!-- <div class="js-fullheight"> -->
@@ -81,10 +81,10 @@
 
               ?>-->
               <div class="form-group">
-                <input type="text" id="asunto" class="form-control" placeholder="Asunto">
+                <input type="text" id="asunto" required class="form-control" placeholder="Asunto">
               </div>
               <div class="form-group">
-                <textarea name="" id="mensaje" cols="30" rows="7" class="form-control" placeholder="Mensaje"></textarea>
+                <textarea name="" id="mensaje" required cols="30" rows="7" class="form-control" placeholder="Mensaje"></textarea>
               </div>
               <div class="form-group">
                 <input type="submit" value="Enviar Mensaje" class="btn btn-primary py-3 px-5">

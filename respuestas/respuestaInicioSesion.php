@@ -10,6 +10,7 @@ if ($client == null){
 }else if($client->clave == $clave){
 	session_start();
 	$_SESSION['cod_user'] = $client->codigo;
+	$_SESSION['tipo_user'] = $client->tipo_usuario;
 	echo $client->codigo;
 }else{
 	echo -2;

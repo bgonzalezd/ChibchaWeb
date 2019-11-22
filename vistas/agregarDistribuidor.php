@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+<?php session_start();
+  include ("../mapeo/ServicioUsuario.php");?>
 <html lang="en">
   <head>
-    <title>Registro</title>
+    <title>Agregar distribuidor</title>
     <?php include("Comun/head.html"); ?>
     
     <style>
@@ -41,6 +43,18 @@ input[type=submit]:hover {
 }
 </style>
 <script type="text/javascript">
+
+
+    function generarClave(){
+      var letras = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+      var aux = "";
+      for(var i = 0;i<10;i++){
+        var n = Math.floor(Math.random() * letras.length);
+        aux = aux + letras[n];
+      }
+      return aux;
+
+    }
     
 
     function registrar() {
@@ -48,40 +62,35 @@ input[type=submit]:hover {
         var nom = $('#fname').val().trim();
         var user = $('#usuario').val();
         var email = $('#email').val();
-        var c1 = $('#clave').val().trim();
-        var c2 = $('#clave2').val().trim();
-        if(c1.localeCompare(c2)==0){
-          var request = $.ajax({
-              url: "../respuestas/respuestaRegistro.php",
-              method: "POST",
-              data: { nombre : nom , clave : c1 , nom_user : user , email : email}
-            });
-             
-            request.done(function( msg ) {
-              if(msg == 'false'){
-                alert('Usuario ya existe');
-              }else{
-                alert('Agregado correctamente');
-                window.location.href = "index.php";
-              }
-              
-            });
-             
-            request.fail(function( jqXHR, textStatus ) {
-              console.log( "Request failed: " + textStatus );
-            });
-        }else{
-          alert("Las constraseñas no son iguales");
-
-        }
+        var tipo = $('#tipo').val();
+        var clave = generarClave();
+        var request = $.ajax({
+            url: "../respuestas/respuestaAgregarDistribuidor.php",
+            method: "POST",
+            data: { nombre : nom , clave : clave , nom_user : user , email : email, tipo : tipo}
+          });
+           
+          request.done(function( msg ) {
+            if(msg == 'false'){
+              alert('Usuario ya existe');
+            }else{
+              alert('Agregado correctamente');
+              window.location.href = "distribuidores.php";
+            }
+            
+          });
+           
+          request.fail(function( jqXHR, textStatus ) {
+            console.log( "Request failed: " + textStatus );
+          });
+        
       });
     }
 
 </script>
   </head>
   <body>
-  
-  <?php include("Comun/menuSinSesion.html"); ?>
+  <?php include("Comun/verificarSesionAdmin.php"); ?>
     <!-- END nav -->
 
     <!-- <div class="js-fullheight"> -->
@@ -90,23 +99,35 @@ input[type=submit]:hover {
 
     <section class="ftco-section bg-light" style="padding: 0 0 0 0">
       <div class="container text-center" style="max-width: 800px">
-        <h1 class="mb-3 bread">Registrar</h1>
+        <h1 class="mb-3 bread">Agregar distribuidor</h1>
         <form action="javascript:registrar()">
           <label for="fname" class="etiqueta">Nombre completo</label>
-                  <input type="text" id="fname" name="firstname" required placeholder="Tu nombre completo">
+                  <input type="text" id="fname" name="firstname" required placeholder="Nombre">
               
 
               
                 <label for="email" class="etiqueta">E-mail</label>
-                <input type="text" required id="email" name="nemail" placeholder="Tu e-mail..">
+                <input type="text" required id="email" name="nemail" placeholder="E-mail..">
 
                 <label for="usuario" class="etiqueta">Nombre de usuario</label>
-                <input type="text" required id="usuario" name="nusuario" placeholder="Tu nombre de usuario..">
-              <label for="clave" class="etiqueta">Contraseña</label>
-                  <input type="password" required id="clave" name="claveu" placeholder="Tu contraseña..">
-             
-                <label for="clave2" class="etiqueta">Repetir contraseña</label>
-                <input type="password" required id="clave2" name="claveu2" placeholder="Tu contraseña..">
+                <input type="text" required id="usuario" name="nusuario" placeholder="Nombre de usuario..">
+
+                <label for="tipo" class="etiqueta">Tipo de distribuidor</label>
+                <select  id="tipo" name="ntipo" placeholder="Tipo">
+                  <?php
+
+                    include ('../mapeo/ServicioTipoDistribuidor.php');
+                    $st = new ServicioTipoDistribuidor();
+                    $arr = $st->getAll();
+                    foreach($arr as $tipo){
+                      ?>
+                        <option value="<?php echo $tipo->codigo ?>"><?php echo $tipo->nombre ?></option>
+
+                      <?php
+                    }
+
+                  ?>
+                </select>
               
                 <input type="submit" value="Registrar" style="background-color: #4DCAC7; border-width: 2px; border-style: solid; border-color: black;">
               

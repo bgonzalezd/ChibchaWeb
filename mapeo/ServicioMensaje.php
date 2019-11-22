@@ -1,5 +1,4 @@
 <?php
-
 include ('../modelo/Mensaje.php');
 require_once ('conexion.php');
 
@@ -13,7 +12,7 @@ class ServicioMensaje{
     }
 
 	public function getAll(){
-		$result = pg_query($this->conexion, "SELECT * FROM MENSAJE UNION SELECT * FROM  dblink('$this->config','SELECT * FROM MENSAJE') as resultado($this->columns) ORDER BY fecha;");
+		$result = pg_query($this->conexion, "SELECT * FROM MENSAJE UNION SELECT * FROM  dblink('$this->config','SELECT * FROM MENSAJE') as resultado($this->columns) ORDER BY fecha DESC;");
 		$arr = array();
 		if ($result) {
 	    // output data of each row

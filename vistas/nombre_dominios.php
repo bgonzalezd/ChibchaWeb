@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <?php session_start();
-  include ("../mapeo/ServicioUsuario.php");?>
+  include ("../mapeo/ServicioUsuario.php");
+  include ("../mapeo/ServicioNombreDominio.php");?>
 <html lang="en">
   <head>
-    <title>Distribuidores</title>
+    <title>Nombre de dominios</title>
     <?php include("Comun/head.html"); ?>
     <style>
 .mensajes {
@@ -28,7 +29,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 
  </head>
   <body>
-  <?php include("Comun/verificarSesionAdmin.php"); ?>
+  <?php include("Comun/verificarSesionDistri.php"); ?>
     <!-- END nav -->
     
     <!-- <div class="js-fullheight"> -->
@@ -36,12 +37,12 @@ tr:nth-child(even){background-color: #f2f2f2}
       
     </div>
 
-    <h1 style="margin-top: 50px;width: 100%" align="center">Distribuidores</h1>
+    <h1 style="margin-top: 50px;width: 100%" align="center">Nombre de dominios</h1>
     <table>
         <tr>
           <td>
-            <a href="agregarDistribuidor.php">
-              <input type="button" value="Agregar distribuidor" class="btn btn-primary py-3 px-5" style="background-color: blue;color: white">
+            <a href="agregarNombreDominio.php">
+              <input type="button" value="Agregar nombre" class="btn btn-primary py-3 px-5" style="background-color: blue;color: white">
             </a>
           </td>
         </tr>
@@ -54,15 +55,14 @@ tr:nth-child(even){background-color: #f2f2f2}
                   <table class="mensajes" style="vertical-align: top;height: 100%">
                     <?php
 
-                        $su = new ServicioUsuario();
-                        $arr = $su->getDistribuidores();
-                        foreach ($arr as $texto){
-                          $distribuidor = json_decode($texto)
+                        $su = new ServicioNombreDominio();
+                        $arr = $su->getNamesInfo($_SESSION['cod_user']);
+                        foreach ($arr as $nom){
                           ?>
                             <tr class="fila">
-                              <td class="columna" style="border-left: 1px solid black"><?php echo $distribuidor->nombre; ?></td>
-                              <td class="columna" style="border-left: 1px solid black"><?php echo $distribuidor->email; ?></td>
-                              <td class="columna" style="border-left: 1px solid black"><?php echo $distribuidor->etiqueta; ?></td>
+                              <td class="columna" style="border-left: 1px solid black"><?php echo $nom->nombre; ?></td>
+                              <td class="columna" style="border-left: 1px solid black"><?php echo $nom->duracion_meses; ?></td>
+                              <td class="columna" style="border-left: 1px solid black"><?php echo $nom->precio; ?></td>
                             </tr>
                           <?php
                         }

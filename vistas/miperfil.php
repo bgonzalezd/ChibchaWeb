@@ -101,7 +101,7 @@
     </style>
   </head>
   <body>
-  <?php include("Comun/verificarSesion.php"); ?>
+  <?php include("Comun/verificarSesionNormal.php"); ?>
     <!-- END nav -->
     
     <!-- <div class="js-fullheight"> -->
@@ -133,7 +133,6 @@
                                     <h6>
                                         <?php echo $cli->nom_usuario ?>
                                     </h6>
-                                    <p class="proile-rating">Edad : <span><?php echo $cli->edad ?></span></p>
                             
                         </div>
                     </div>

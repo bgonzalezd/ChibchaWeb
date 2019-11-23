@@ -1,6 +1,11 @@
+<?php
+  $codi = $_POST['cod_nombre'];
+
+?>
 <!DOCTYPE html>
 <?php session_start();
-  include ("../mapeo/ServicioUsuario.php");?>
+  include ("../mapeo/ServicioUsuario.php");
+  include ("../mapeo/ServicioNombreDominio.php");?>
 <html lang="en">
   <head>
     <title>Agregar distribuidor</title>
@@ -48,13 +53,14 @@ input[type=submit]:hover {
 
     function registrar() {
       $(document).ready(function(){
+        var codigo = <?php echo $codi ?>;
         var nom = $('#fname').val().trim();
         var precio = $('#precio').val();
         var renovacion = $('#renovacion').val();
         var request = $.ajax({
-            url: "../respuestas/respuestaAgregarNombreDominio.php",
+            url: "../respuestas/respuestaEditarNombreDominio.php",
             method: "POST",
-            data: { nombre : nom , precio : precio , renovacion : renovacion}
+            data: { codigo : codigo , nombre : nom , precio : precio , renovacion : renovacion}
           });
            
           request.done(function( msg ) {
@@ -74,7 +80,10 @@ input[type=submit]:hover {
 </script>
   </head>
   <body>
-  <?php include("Comun/verificarSesionDistri.php"); ?>
+  <?php include("Comun/verificarSesionDistri.php");
+    $sN = new ServicioNombreDominio();
+    $nombre_dominio = $sN->getName($codi);
+  ?>
     <!-- END nav -->
 
     <!-- <div class="js-fullheight"> -->
@@ -83,21 +92,21 @@ input[type=submit]:hover {
 
     <section class="ftco-section bg-light" style="padding: 0 0 0 0">
       <div class="container text-center" style="max-width: 800px">
-        <h1 class="mb-3 bread">Agregar nombre de dominio</h1>
+        <h1 class="mb-3 bread">Editar nombre de dominio</h1>
         <form action="javascript:registrar()">
           <label for="fname" class="etiqueta">Nombre</label>
-                  <input type="text" id="fname" name="firstname" required placeholder="Nombre">
+                  <input type="text" id="fname" name="firstname" required placeholder="Nombre" value="<?php echo $nombre_dominio->nombre ?>">
               
 
               
                 <label for="edad" class="etiqueta">Precio</label>
-                <input type="text" required oninput="this.value = this.value.replace(/[^0-9.]/g, '')" maxlength="4" id="precio" name="precio_n" placeholder="Precio..">
+                <input type="text" required oninput="this.value = this.value.replace(/[^0-9.]/g, '')" maxlength="4" id="precio" name="precio_n" placeholder="Precio.." value="<?php echo $nombre_dominio->precio ?>">
 
                 <label for="edad" class="etiqueta">Precio renovación</label>
-                <input type="text" required oninput="this.value = this.value.replace(/[^0-9.]/g, '')" maxlength="4" id="renovacion" name="renovacion_n" placeholder="Precio..">
+                <input type="text" required oninput="this.value = this.value.replace(/[^0-9.]/g, '')" maxlength="4" id="renovacion" name="renovacion_n" placeholder="Renocacion.." value="<?php echo $nombre_dominio->renovacion ?>">
 
               
-                <input type="submit" value="Registrar" style="background-color: #4DCAC7; border-width: 2px; border-style: solid; border-color: black;">
+                <input type="submit" value="Editar" style="background-color: #4DCAC7; border-width: 2px; border-style: solid; border-color: black;">
               
         
           

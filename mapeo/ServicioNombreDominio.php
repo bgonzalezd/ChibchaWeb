@@ -37,6 +37,18 @@ class ServicioNombreDominio{
 		return $arr;
 	}
 
+	public function getName($codigo){
+		$result = pg_query($this->conexion, "SELECT * FROM(SELECT * FROM NOMBRE_DOMINIO UNION SELECT * FROM  dblink('$this->config','SELECT * FROM NOMBRE_DOMINIO') as resultado($this->columns)) as todo where codigo = $codigo;");
+		$arr = null;
+		if ($result) {
+	    // output data of each row
+		    while($row = pg_fetch_row($result)) {
+		    	$arr = new NombreDominio($row[0],$row[1],$row[2],$row[3],$row[4]);
+		    }
+		}
+		return $arr;
+	}
+
 	public function getValidOptions($dominio){
 		$result = pg_query($this->conexion, "SELECT sub.nombre, sub.duracion_meses, sub.precio, sub.renovacion FROM (SELECT * FROM nombre_dominio UNION SELECT * FROM dblink('$this->config','SELECT * FROM NOMBRE_DOMINIO') AS resultado ($this->columns)) AS sub WHERE sub.codigo NOT IN (SELECT sub2.cod_nombre_dominio FROM (SELECT * FROM dominio_adquirido UNION SELECT * FROM dblink('$this->config','SELECT * FROM DOMINIO_ADQUIRIDO') AS resultado(codigo int, nombre varchar(50),cod_nombre_dominio int,cod_cliente int)) AS sub2 WHERE sub2.nombre = '$dominio');");
 		$arr = array();
@@ -55,6 +67,14 @@ class ServicioNombreDominio{
 			$result = pg_query($this->conexion, "INSERT INTO NOMBRE_DOMINIO VALUES (nextval('llavenombre_dominio'),'$nombre',12,$precio,$renovacion,$cod_distribuidor);");
 		}else{
 			$result = pg_query($this->conexion, "SELECT dblink('$this->config','INSERT INTO NOMBRE_DOMINIO VALUES (nextval(''llavenombre_dominio''),''$nombre'',12,$precio,$renovacion,$cod_distribuidor);');");
+		}
+	}
+
+	public function editNombreDominio($codigo,$nombre, $precio, $renovacion){
+		if(($codigo%2)!=0){
+			$result = pg_query($this->conexion, "UPDATE NOMBRE_DOMINIO SET nombre = '$nombre', precio = $precio, renovacion = $renovacion WHERE codigo = $codigo;");
+		}else{
+			$result = pg_query($this->conexion, "SELECT dblink('$this->config','UPDATE NOMBRE_DOMINIO SET nombre = ''$nombre'', precio = $precio, renovacion = $renovacion WHERE codigo = $codigo;');");
 		}
 	}
 

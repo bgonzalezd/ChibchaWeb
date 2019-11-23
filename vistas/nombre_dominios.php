@@ -26,7 +26,14 @@
 
 tr:nth-child(even){background-color: #f2f2f2}
 </style>
-
+<script type="text/javascript">
+  function irEditar(codigo){
+    $(document).ready(function(){
+      $('#in_cod_nombre').attr('value',codigo);
+      document.getElementById('formulario').submit();
+    });
+  }
+</script>
  </head>
   <body>
   <?php include("Comun/verificarSesionDistri.php"); ?>
@@ -48,26 +55,33 @@ tr:nth-child(even){background-color: #f2f2f2}
         </tr>
       </table>   
 
-    <section class="ftco-section bg-light" style="padding: 0 0 0 0;border: 2px solid black" > 
+    <section class="ftco-section bg-light" style="padding: 60px 60px 60px 60px;background-color: white" > 
 <!------ Include the above in your HEAD tag ---------->
-        <div style=" align-content: center; width: 100%;height: 100%">
-                <div style="overflow-x:auto;max-height: 700px;height: 100%">
-                  <table class="mensajes" style="vertical-align: top;height: 100%">
-                    <?php
+        <div style=" align-content: center; width: 100%;height: 100%;background-color: white">
+                <div style="overflow-x:auto;max-height: 700px;height: 100%;background-color: white">
+                    <table class="mensajes" style="vertical-align: top;height: 100%;border: 2px solid black">
+                      <?php
 
-                        $su = new ServicioNombreDominio();
-                        $arr = $su->getNamesInfo($_SESSION['cod_user']);
-                        foreach ($arr as $nom){
-                          ?>
-                            <tr class="fila">
-                              <td class="columna" style="border-left: 1px solid black"><?php echo $nom->nombre; ?></td>
-                              <td class="columna" style="border-left: 1px solid black"><?php echo $nom->duracion_meses; ?></td>
-                              <td class="columna" style="border-left: 1px solid black"><?php echo $nom->precio; ?></td>
-                            </tr>
-                          <?php
-                        }
-                    ?>
-                  </table>
+                          $su = new ServicioNombreDominio();
+                          $arr = $su->getNamesInfo($_SESSION['cod_user']);
+                          foreach ($arr as $nom){
+                            ?>
+                              <tr class="fila">
+                                <td class="columna" style="border-left: 1px solid black">$ <?php echo $nom->nombre; ?></td>
+                                <td class="columna" style="border-left: 1px solid black">$ <?php echo $nom->precio; ?></td>
+                                <td class="columna" style="border-left: 1px solid black">$ <?php echo $nom->renovacion; ?></td>
+                                <td class="columna" style="width: 10%">
+                                  <button style="width:40%" onclick="irEditar(<?php echo $nom->codigo ?>)"><img style="width: 100%;height: 100%" src="../images/edit.png"/></td>
+                              </tr>
+                            <?php
+                          }
+                      ?>
+                    </table>
+                    
+                      <form id="formulario" action="editarNombreDominio.php" method="POST">
+
+                          <input type="hidden" id="in_cod_nombre" name="cod_nombre" />
+                      </form>
                 </div> 
               
         </div>

@@ -10,7 +10,7 @@ class ServicioNombreDominio{
 		$this->conexion = conectar();
 		$this->config = getConfig();
 		$this->columns = 'codigo int,nombre varchar(30),duracion_meses int,precio numeric(4,2),renovacion numeric(4,2),cod_distribuidor int';
-		$this->columns_dominio = 'codigo int,nombre varchar(50),cod_nombre_dominio int, cod_cliente int';
+		$this->columns_dominio = 'codigo int,nombre varchar(50),cod_nombre_dominio int, cod_cliente int, estado varchar(1)';
     }
 
 	public function getAll(){

@@ -7,6 +7,15 @@
     <?php include("Comun/head.html"); ?>
     
     <script type="text/javascript">
+
+      function verOpciones(nombre,nombre_dominio){
+        $(document).ready(function(){
+            $('#in_nom').attr('value',nombre);
+            $('#in_nom_dominio').attr('value',nombre_dominio);
+            document.getElementById('formulario').submit();
+        });
+      }
+
       function buscar(){
 
         $(document).ready(function(){
@@ -23,10 +32,10 @@
              
             request.done(function( msg ) {
               var nombres = JSON.parse(msg);
-              $("#respuestaDominio").append("<table class='table'><thead class='thead-primary'><th>Dominios disponibles</th><th>Registro</th><th>Duración</th><th>Renovación</th><th> </th></thead><tbody id='cuerpo_respuesta'></tbody></table>");
+              $("#respuestaDominio").append("<h1 align='center' style='margin-bottom : 20px'>Resultados</h1><table class='table'><thead class='thead-primary'><th>Dominios disponibles</th><th>Opciones</th></thead><tbody id='cuerpo_respuesta'></tbody></table>");
               for(var i = 0;i<nombres.length;i++){
                   var n = nombres[i];
-                  $('#cuerpo_respuesta').append("<tr><td>"+dom_buscar[0]+"."+n['nombre']+"</td> <td>$ "+n['precio']+"</td> <td>"+n['duracion_meses']+"</td> <td>"+n['renovacion']+"</td> <td><input type='button' class='search-domain btn btn-primary px-5' value='Comprar'></td></tr>");
+                  $('#cuerpo_respuesta').append("<tr><td>"+dom_buscar[0]+"."+n['nombre']+"</td><td><input type='button' class='search-domain btn btn-primary px-5' onclick=\"verOpciones('"+dom_buscar[0]+"','"+n['nombre']+"')\" value='Ver'></td></tr>");
               }
 
             });
@@ -86,13 +95,18 @@
         
       </div>
     </section>
+    <form id="formulario" action="vistaOpcionesDominio.php" method="POST">
 
-    <section class="ftco-section">
+        <input type="hidden" id="in_nom" name="nombre" />
+        <input type="hidden" id="in_nom_dominio" name="nombre_dominio" />
+    </form>
+
+    <!--<section class="ftco-section">
     	<div class="container">
     		<div class="row justify-content-center mb-5">
           <div class="col-md-7 text-center heading-section ftco-animate">
-            <span class="subheading">Precios</span>
-            <h2 class="mb-4">Precios de dominios</h2>
+            <span class="subheading">Dominios</span>
+            <h2 class="mb-4">Nombre de dominios disponibles</h2>
           </div>
         </div>
     		<div class="row">
@@ -103,18 +117,16 @@
 						      <tr>
 						        <th>TLD</th>
 						        <th>Duración</th>
-						        <th>Registro</th>
-						        <th>Renovación</th>
 						      </tr>
 						    </thead>
 						    <tbody>
 						      <?php
 
-                    $servicioNombreDominio = new ServicioNombreDominio();
+                    /*$servicioNombreDominio = new ServicioNombreDominio();
                     $nombres = $servicioNombreDominio->getAll();
                     foreach ($nombres as $nombre) {
-                      echo "<tr> <td>.$nombre->nombre</td> <td>$nombre->duracion_meses meses</td> <td>$ $nombre->precio</td> <td>$ $nombre->renovacion</td> </tr>";
-                    }
+                      echo "<tr> <td>.$nombre->nombre</td> <td>$nombre->duracion_meses meses</td>  </tr>";
+                    }*/
 
                   ?>
 						    </tbody>
@@ -123,7 +135,7 @@
     			</div>
     		</div>
     	</div>
-    </section>
+    </section>-->
 
 
    <?php include("Comun/footer.html"); ?>

@@ -47,11 +47,16 @@ tr:nth-child(even){background-color: #f2f2f2}
         </tr>
       </table>   
 
-    <section class="ftco-section bg-light" style="padding: 0 0 0 0;border: 2px solid black" > 
+    <section class="ftco-section bg-light" style="padding: 60px 60px 60px 60px;background-color: white" > 
 <!------ Include the above in your HEAD tag ---------->
         <div style=" align-content: center; width: 100%;height: 100%">
                 <div style="overflow-x:auto;max-height: 700px;height: 100%">
-                  <table class="mensajes" style="vertical-align: top;height: 100%">
+                  <table class="mensajes" style="vertical-align: top;height: 100%;border: 2px solid black">
+                    <tr class="fila">
+                        <th class="columna">Nombre del distribuidor</th>
+                        <th class="columna">Email del distribuidor</th>
+                        <th class="columna">Categoría del distribuidor</th>
+                      </tr>
                     <?php
 
                         $su = new ServicioUsuario();
@@ -60,9 +65,9 @@ tr:nth-child(even){background-color: #f2f2f2}
                           $distribuidor = json_decode($texto)
                           ?>
                             <tr class="fila">
-                              <td class="columna" style="border-left: 1px solid black"><?php echo $distribuidor->nombre; ?></td>
-                              <td class="columna" style="border-left: 1px solid black"><?php echo $distribuidor->email; ?></td>
-                              <td class="columna" style="border-left: 1px solid black"><?php echo $distribuidor->etiqueta; ?></td>
+                              <td class="columna"><?php echo $distribuidor->nombre; ?></td>
+                              <td class="columna"><?php echo $distribuidor->email; ?></td>
+                              <td class="columna"><?php echo $distribuidor->etiqueta; ?></td>
                             </tr>
                           <?php
                         }

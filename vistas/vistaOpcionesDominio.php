@@ -1,3 +1,8 @@
+<?php
+  $nombre = $_POST['nombre'];
+  $nombre_dominio = $_POST['nombre_dominio'];
+
+?>
 <!DOCTYPE html>
 <?php session_start();
   include ("../mapeo/ServicioUsuario.php");
@@ -33,10 +38,28 @@ tr:nth-child(even){background-color: #f2f2f2}
       document.getElementById('formulario').submit();
     });
   }
+  function solicitar(objeto){
+        $(document).ready(function(){
+          $('#msg_inicio').empty();
+          var request = $.ajax({
+              url: "../respuestas/respuestaSolicitarDominio.php",
+              method: "POST",
+              data: { objeto : objeto}
+            });
+             
+            request.done(function( msg ) {
+              
+            });
+             
+            request.fail(function( jqXHR, textStatus ) {
+              console.log( "Request failed: " + textStatus );
+            });
+        });
+      }
 </script>
  </head>
   <body>
-  <?php include("Comun/verificarSesionDistri.php"); ?>
+  <?php include("Comun/verificarSesionNormal.php"); ?>
     <!-- END nav -->
     
     <!-- <div class="js-fullheight"> -->
@@ -44,16 +67,7 @@ tr:nth-child(even){background-color: #f2f2f2}
       
     </div>
 
-    <h1 style="margin-top: 50px;width: 100%" align="center">Nombre de dominios</h1>
-    <table>
-        <tr>
-          <td>
-            <a href="agregarNombreDominio.php">
-              <input type="button" value="Agregar nombre" class="btn btn-primary py-3 px-5" style="background-color: blue;color: white">
-            </a>
-          </td>
-        </tr>
-      </table>   
+    <h1 style="margin-top: 50px;width: 100%" align="center">Nombre de dominios</h1> 
 
     <section class="ftco-section bg-light" style="padding: 60px 60px 60px 60px;background-color: white" > 
 <!------ Include the above in your HEAD tag ---------->
@@ -65,25 +79,30 @@ tr:nth-child(even){background-color: #f2f2f2}
                         <th class="columna">Duración</th>
                         <th class="columna">Precio</th>
                         <th class="columna">Renovación</th>
+                        <th class="columna">Nombre del distribuidor</th>
+                        <th class="columna">Email del distribuidor</th>
                         <th class="columna">Acción</th>
                       </tr>
                       <?php
 
-                          $su = new ServicioNombreDominio();
-                          $arr = $su->getNamesInfo($_SESSION['cod_user']);
-                          foreach ($arr as $nom){
-                            ?>
-                              <tr class="fila">
-                                <td class="columna">$ <?php echo $nom->nombre; ?></td>
-                                <td class="columna">$ <?php echo $nom->duracion_meses;?></td>
-                                <td class="columna">$ <?php echo $nom->precio; ?></td>
-                                <td class="columna">$ <?php echo $nom->renovacion; ?></td>
-                                <td class="columna" style="width: 10%">
-                                  <button style="width:40%;background-color: transparent;" onclick="irEditar(<?php echo $nom->codigo ?>)"><img style="width: 100%;height: 100%" src="../images/edit.png"/></button></td>
-                              </tr>
-                            <?php
-                          }
-                      ?>
+                        $su = new ServicioNombreDominio();
+                        $arr = $su->getPrecios($nombre_dominio);
+                        foreach ($arr as $texto){
+                          $distribuidor = json_decode($texto)
+                          ?>
+                            <tr class="fila">
+                              <td class="columna"><?php echo $nombre . "." . $distribuidor->nombre_dominio; ?></td>
+                              <td class="columna"><?php echo $distribuidor->duracion_meses; ?> meses</td>
+                              <td class="columna">$ <?php echo $distribuidor->precio; ?></td>
+                              <td class="columna">$ <?php echo $distribuidor->renovacion; ?></td>
+                              <td class="columna"><?php echo $distribuidor->nombre_distribuidor; ?></td>
+                              <td class="columna"><?php echo $distribuidor->email; ?></td>
+                              <td class="columna" style="width: 10%">
+                                  <input type="button" style="width:80%;background-color: transparent;" onclick="solicitar('<?php echo $texto ?>')" value="Solicitar"/></td>
+                            </tr>
+                          <?php
+                        }
+                    ?>
                     </table>
                     
                       <form id="formulario" action="editarNombreDominio.php" method="POST">

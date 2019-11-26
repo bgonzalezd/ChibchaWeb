@@ -1,7 +1,7 @@
 <?php
 
 class Dominio{
-	public function __construct($codigo, $nombre, $cod_nombre_dominio,$cod_cliente,$esatdo) {
+	public function __construct($codigo, $nombre, $cod_nombre_dominio,$cod_cliente,$estado) {
 		$this->codigo = $codigo;
 		$this->nombre = $nombre;
 		$this->cod_nombre_dominio = $cod_nombre_dominio;

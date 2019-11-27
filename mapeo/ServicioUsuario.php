@@ -14,7 +14,19 @@ class ServicioUsuario{
     }
 
 	public function getAll(){
-		$result = pg_query($this->conexion, "SELECT * FROM USUARIO UNION SELECT * FROM  dblink('$this->config','SELECT * FROM USUARIO') as resultado($this->columns) ORDER BY codigo;");
+		$result = pg_query($this->conexion, "SELECT * FROM USUARIO_T ORDER BY codigo;");
+		$arr = array();
+		if ($result) {
+	    // output data of each row
+		    while($row = pg_fetch_row($result)) {
+		    	$cliente = new Usuario($row[0],$row[1],$row[2],$row[3],$row[4],$row[5]);
+		    	array_push($arr,$cliente);
+		    }
+		}
+		return $arr;
+	}
+	public function getClientes(){
+		$result = pg_query($this->conexion, "SELECT * FROM USUARIO_T WHERE tipo_usuario = 'N' ORDER BY codigo;");
 		$arr = array();
 		if ($result) {
 	    // output data of each row
@@ -26,7 +38,7 @@ class ServicioUsuario{
 		return $arr;
 	}
 	public function getDistribuidores(){
-		$result = pg_query($this->conexion, "SELECT row_to_json(todo) FROM (SELECT * FROM (SELECT * FROM USUARIO UNION SELECT * FROM dblink('$this->config','SELECT * FROM USUARIO') as resultado($this->columns) ORDER BY codigo) as t0 , (SELECT * FROM DISTRIBUIDOR UNION SELECT * FROM dblink('$this->config','SELECT * FROM DISTRIBUIDOR') as resultado($this->columns_distribuidor) ORDER BY codigo) as t1, (SELECT * FROM TIPO_DISTRIBUIDOR UNION SELECT * FROM dblink('$this->config','SELECT * FROM TIPO_DISTRIBUIDOR') as resultado($this->columns_tipo_distribuidor) ORDER BY codigo) as t2 WHERE t0.codigo = t1.codigo and t1.cod_tipo = t2.codigo) as todo;");
+		$result = pg_query($this->conexion, "SELECT row_to_json(todo) FROM (SELECT * FROM USUARIO_T, DISTRIBUIDOR_T, TIPO_DISTRIBUIDOR_T WHERE USUARIO_T.codigo = DISTRIBUIDOR_T.codigo and DISTRIBUIDOR_T.cod_tipo = TIPO_DISTRIBUIDOR_T.codigo) as todo;");
 		$arr = array();
 		if ($result) {
 	    // output data of each row
@@ -38,7 +50,7 @@ class ServicioUsuario{
 	}
 
 	public function getUserUsername($nom_usuario){
-		$result = pg_query($this->conexion, "SELECT * FROM (SELECT * FROM USUARIO UNION SELECT * FROM  dblink('$this->config','SELECT * FROM USUARIO') as resultado($this->columns)) AS res WHERE nom_usuario = '$nom_usuario' ORDER BY codigo;");
+		$result = pg_query($this->conexion, "SELECT * FROM USUARIO_T WHERE nom_usuario = '$nom_usuario' ORDER BY codigo;");
 		$cliente = null;
 
 		if ($result){
@@ -86,7 +98,7 @@ class ServicioUsuario{
 		
 	}
 	public function getInfoUsuario($codigo){
-		$result = pg_query($this->conexion, "SELECT * FROM (SELECT * FROM USUARIO UNION SELECT * FROM  dblink('$this->config','SELECT * FROM USUARIO') as resultado($this->columns)) AS res WHERE codigo = $codigo ORDER BY codigo;");
+		$result = pg_query($this->conexion, "SELECT * FROM USUARIO_T WHERE codigo = $codigo ORDER BY codigo;");
 		$cliente = null;
 		if ($result) {
 	    // output data of each row

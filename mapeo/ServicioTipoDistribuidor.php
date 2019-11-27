@@ -12,7 +12,7 @@ class ServicioTipoDistribuidor{
     }
 
 	public function getAll(){
-		$result = pg_query($this->conexion, "SELECT * FROM TIPO_DISTRIBUIDOR UNION SELECT * FROM  dblink('$this->config','SELECT * FROM TIPO_DISTRIBUIDOR') as resultado($this->columns) ORDER BY codigo;");
+		$result = pg_query($this->conexion, "SELECT * FROM TIPO_DISTRIBUIDOR_T ORDER BY codigo;");
 		$arr = array();
 		if ($result) {
 	    // output data of each row

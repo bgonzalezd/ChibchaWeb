@@ -1,15 +1,10 @@
-<?php
-  $nombre = $_POST['nombre'];
-  $nombre_dominio = $_POST['nombre_dominio'];
-
-?>
 <!DOCTYPE html>
 <?php session_start();
   include ("../mapeo/ServicioUsuario.php");
-  include ("../mapeo/ServicioNombreDominio.php");?>
+  include ("../mapeo/ServicioDominio.php");?>
 <html lang="en">
   <head>
-    <title>Nombre de dominios</title>
+    <title>Solicitudes</title>
     <?php include("Comun/head.html"); ?>
     <style>
 .mensajes {
@@ -32,34 +27,28 @@
 tr:nth-child(even){background-color: #f2f2f2}
 </style>
 <script type="text/javascript">
-  function irEditar(codigo){
+  function accionar(codigo,accion){
     $(document).ready(function(){
-      $('#in_cod_nombre').attr('value',codigo);
-      document.getElementById('formulario').submit();
+      var request = $.ajax({
+          url: "../respuestas/respuestaAceptarDominio.php",
+          method: "POST",
+          data: {codigo : codigo , accion : accion}
+        });
+         
+        request.done(function( msg ) {
+          alert(msg);
+          location.reload();
+        });
+         
+        request.fail(function( jqXHR, textStatus ) {
+          console.log( "Request failed: " + textStatus );
+        });
     });
   }
-  function solicitar(nombre,cod_nombre){
-        $(document).ready(function(){
-          var request = $.ajax({
-              url: "../respuestas/respuestaSolicitarDominio.php",
-              method: "POST",
-              data: {nombre : nombre , cod_nombre : cod_nombre}
-            });
-             
-            request.done(function( msg ) {
-              alert(msg);
-              window.location.href = "domain.php";
-            });
-             
-            request.fail(function( jqXHR, textStatus ) {
-              console.log( "Request failed: " + textStatus );
-            });
-        });
-      }
 </script>
  </head>
   <body>
-  <?php include("Comun/verificarSesionNormal.php"); ?>
+  <?php include("Comun/verificarSesionDistri.php"); ?>
     <!-- END nav -->
     
     <!-- <div class="js-fullheight"> -->
@@ -67,7 +56,13 @@ tr:nth-child(even){background-color: #f2f2f2}
       
     </div>
 
-    <h1 style="margin-top: 50px;width: 100%" align="center">Nombre de dominios</h1> 
+    <h1 style="margin-top: 50px;width: 100%" align="center">Nombre de dominios</h1>
+    <table>
+        <tr>
+          <td>
+          </td>
+        </tr>
+      </table>   
 
     <section class="ftco-section bg-light" style="padding: 60px 60px 60px 60px;background-color: white" > 
 <!------ Include the above in your HEAD tag ---------->
@@ -75,30 +70,31 @@ tr:nth-child(even){background-color: #f2f2f2}
                 <div style="overflow-x:auto;max-height: 700px;height: 100%;background-color: white">
                     <table class="mensajes" style="vertical-align: top;height: 100%;border: 2px solid black">
                       <tr class="fila">
-                        <th class="columna">Nombre del dominio</th>
+                        <th class="columna">Nombre del usuario</th>
+                        <th class="columna">Correo del usuario</th>
+                        <th class="columna">Nombre de dominio solicitado</th>
                         <th class="columna">Duración</th>
                         <th class="columna">Precio</th>
                         <th class="columna">Renovación</th>
-                        <th class="columna">Nombre del distribuidor</th>
-                        <th class="columna">Email del distribuidor</th>
                         <th class="columna">Acción</th>
                       </tr>
                       <?php
 
-                        $su = new ServicioNombreDominio();
-                        $arr = $su->getPrecios($nombre_dominio);
+                        $su = new ServicioDominio();
+                        $arr = $su->getInactivos($_SESSION['cod_user']);
                         foreach ($arr as $texto){
-                          $distribuidor = json_decode($texto)
+                          $dominio = json_decode($texto)
                           ?>
                             <tr class="fila">
-                              <td class="columna"><?php echo $nombre . "." . $distribuidor->nombre_dominio; ?></td>
-                              <td class="columna"><?php echo $distribuidor->duracion_meses; ?> meses</td>
-                              <td class="columna">$ <?php echo $distribuidor->precio; ?></td>
-                              <td class="columna">$ <?php echo $distribuidor->renovacion; ?></td>
-                              <td class="columna"><?php echo $distribuidor->nombre_distribuidor; ?></td>
-                              <td class="columna"><?php echo $distribuidor->email; ?></td>
+                              <td class="columna"><?php echo $dominio->nom_cliente; ?></td>
+                              <td class="columna"><?php echo $dominio->email; ?></td>
+                              <td class="columna"><?php echo $dominio->nombre . "." . $dominio->nom_dominio; ?></td>
+                              <td class="columna">$ <?php echo $dominio->duracion_meses; ?> meses</td>
+                              <td class="columna">$ <?php echo $dominio->precio; ?></td>
+                              <td class="columna">$ <?php echo $dominio->renovacion; ?></td>
                               <td class="columna" style="width: 10%">
-                                  <input type="button" style="width:80%;background-color: transparent;" onclick="solicitar('<?php echo $nombre ?>','<?php echo $distribuidor->codigo ?>')" value="Solicitar"/></td>
+                                  <input type="button" style="background-color: transparent;" onclick="accionar(<?php echo $dominio->cod_dominio_adquirido ?>,'A');" value="Aceptar"/>
+                                  <input type="button" style="background-color: transparent;" onclick="accionar(<?php echo $dominio->cod_dominio_adquirido ?>,'N');" value="Negar"/></td>
                             </tr>
                           <?php
                         }

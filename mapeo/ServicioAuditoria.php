@@ -19,8 +19,8 @@ class ServicioAuditoria{
 		}
 	}
 
-	public function getAll($cod_distribuidor){
-		$result = pg_query($this->conexion, "SELECT row_to_json(todo) FROM (SELECT DOMINIO_ADQUIRIDO_T.codigo AS cod_dominio_adquirido, USUARIO_T.nombre as nom_cliente, USUARIO_T.email, DOMINIO_ADQUIRIDO_T.nombre, NOMBRE_DOMINIO_T.nombre AS nom_dominio, NOMBRE_DOMINIO_T.precio, NOMBRE_DOMINIO_T.renovacion, NOMBRE_DOMINIO_T.duracion_meses FROM DOMINIO_ADQUIRIDO_T,USUARIO_T,NOMBRE_DOMINIO_T WHERE DOMINIO_ADQUIRIDO_T.cod_nombre_dominio = NOMBRE_DOMINIO_T.codigo AND DOMINIO_ADQUIRIDO_T.cod_cliente = USUARIO_T.codigo AND DOMINIO_ADQUIRIDO_T.estado = 'I' AND NOMBRE_DOMINIO_T.cod_distribuidor = $cod_distribuidor) AS todo;");
+	public function getAll(){
+		$result = pg_query($this->conexion, "SELECT row_to_json(todo) FROM (SELECT AUDITORIA_T.codigo, AUDITORIA_T.tabla, AUDITORIA_T.accion, AUDITORIA_T.cod_usuario, AUDITORIA_T.fecha, USUARIO_T.nombre, USUARIO_T.email FROM AUDITORIA_T, USUARIO_T WHERE AUDITORIA_T.cod_usuario = USUARIO_T.codigo ORDER BY codigo DESC) AS todo;");
 		$arr = array();
 		if ($result) {
 	    // output data of each row

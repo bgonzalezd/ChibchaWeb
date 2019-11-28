@@ -25,7 +25,14 @@
 
 tr:nth-child(even){background-color: #f2f2f2}
 </style>
-
+<script type="text/javascript">
+  function irEditar(codigo){
+    $(document).ready(function(){
+      $('#in_cod_distribuidor').attr('value',codigo);
+      document.getElementById('formulario').submit();
+    });
+  }
+</script>
  </head>
   <body>
   <?php include("Comun/verificarSesionAdmin.php"); ?>
@@ -56,6 +63,7 @@ tr:nth-child(even){background-color: #f2f2f2}
                         <th class="columna">Nombre del distribuidor</th>
                         <th class="columna">Email del distribuidor</th>
                         <th class="columna">Categoría del distribuidor</th>
+                        <th class="columna">Acción</th>
                       </tr>
                     <?php
 
@@ -68,11 +76,17 @@ tr:nth-child(even){background-color: #f2f2f2}
                               <td class="columna"><?php echo $distribuidor->nombre; ?></td>
                               <td class="columna"><?php echo $distribuidor->email; ?></td>
                               <td class="columna"><?php echo $distribuidor->etiqueta; ?></td>
+                                <td class="columna" style="width: 10%">
+                                  <button style="width:40%;background-color: transparent;" onclick="irEditar(<?php echo $distribuidor->codigo ?>)"><img style="width: 100%;height: 100%" src="../images/edit.png"/></button></td>
                             </tr>
                           <?php
                         }
                     ?>
                   </table>
+                  <form id="formulario" action="editarDistribuidor.php" method="POST">
+
+                          <input type="hidden" id="in_cod_distribuidor" name="cod_distribuidor" />
+                      </form>
                 </div> 
               
         </div>

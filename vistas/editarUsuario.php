@@ -1,5 +1,5 @@
 <?php
-  $codi = $_POST['cod_nombre'];
+  $codi = $_POST['cod_usuario'];
 
 ?>
 <!DOCTYPE html>
@@ -8,7 +8,7 @@
   include ("../mapeo/ServicioNombreDominio.php");?>
 <html lang="en">
   <head>
-    <title>Editar nombre de dominio</title>
+    <title>Editar usuario</title>
     <?php include("Comun/head.html"); ?>
     
     <style>
@@ -55,18 +55,18 @@ input[type=submit]:hover {
       $(document).ready(function(){
         var codigo = <?php echo $codi ?>;
         var nom = $('#fname').val().trim();
-        var precio = $('#precio').val();
-        var renovacion = $('#renovacion').val();
+        var nom_usuario = $('#nom_usuario').val();
+        var email = $('#email').val();
         var request = $.ajax({
-            url: "../respuestas/respuestaEditarNombreDominio.php",
+            url: "../respuestas/respuestaEditarUsuario.php",
             method: "POST",
-            data: { codigo : codigo , nombre : nom , precio : precio , renovacion : renovacion}
+            data: { codigo : codigo , nombre : nom , nom_usuario : nom_usuario , email : email}
           });
            
           request.done(function( msg ) {
             
               alert(msg);
-              window.location.href = "nombre_dominios.php";
+              window.location.href = "lista_usuarios.php";
             
           });
            
@@ -80,9 +80,9 @@ input[type=submit]:hover {
 </script>
   </head>
   <body>
-  <?php include("Comun/verificarSesionDistri.php");
-    $sN = new ServicioNombreDominio();
-    $nombre_dominio = $sN->getName($codi);
+  <?php include("Comun/verificarSesionAdmin.php");
+    $sN = new ServicioUsuario();
+    $usuario = $sN->getInfoUsuario($codi);
   ?>
     <!-- END nav -->
 
@@ -92,18 +92,20 @@ input[type=submit]:hover {
 
     <section class="ftco-section bg-light" style="padding: 0 0 0 0">
       <div class="container text-center" style="max-width: 800px">
-        <h1 class="mb-3 bread">Editar nombre de dominio</h1>
+        <h1 class="mb-3 bread">Editar usuario</h1>
         <form action="javascript:registrar()">
-          <label for="fname" class="etiqueta">Nombre</label>
-                  <input type="text" id="fname" name="firstname" required placeholder="Nombre" value="<?php echo $nombre_dominio->nombre ?>">
+          <label for="fname" class="etiqueta">Nombre completo</label>
+                  <input type="text" id="fname" name="firstname" required placeholder="Nombre" value="<?php echo $usuario->nombre ?>">
+
+
+          <label for="fname" class="etiqueta">Nombre de usuario</label>
+                  <input type="text" id="nom_usuario" name="n_nom_usuario" required placeholder="Nombre" value="<?php echo $usuario->nom_usuario ?>">
+
+
+          <label for="fname" class="etiqueta">Email</label>
+                  <input type="text" id="email" name="nemail" required placeholder="Nombre" value="<?php echo $usuario->email ?>">
               
 
-              
-                <label for="edad" class="etiqueta">Precio</label>
-                <input type="text" required oninput="this.value = this.value.replace(/[^0-9.]/g, '')" maxlength="4" id="precio" name="precio_n" placeholder="Precio.." value="<?php echo $nombre_dominio->precio ?>">
-
-                <label for="edad" class="etiqueta">Precio renovación</label>
-                <input type="text" required oninput="this.value = this.value.replace(/[^0-9.]/g, '')" maxlength="4" id="renovacion" name="renovacion_n" placeholder="Renocacion.." value="<?php echo $nombre_dominio->renovacion ?>">
 
               
                 <input type="submit" value="Editar" style="background-color: #4DCAC7; border-width: 2px; border-style: solid; border-color: black;">

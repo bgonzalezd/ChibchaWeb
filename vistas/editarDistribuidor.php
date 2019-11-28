@@ -1,14 +1,13 @@
 <?php
-  $codi = $_POST['cod_nombre'];
+  $codi = $_POST['cod_distribuidor'];
 
 ?>
 <!DOCTYPE html>
 <?php session_start();
-  include ("../mapeo/ServicioUsuario.php");
-  include ("../mapeo/ServicioNombreDominio.php");?>
+  include ("../mapeo/ServicioUsuario.php");?>
 <html lang="en">
   <head>
-    <title>Editar nombre de dominio</title>
+    <title>Editar distribuidor</title>
     <?php include("Comun/head.html"); ?>
     
     <style>
@@ -55,18 +54,18 @@ input[type=submit]:hover {
       $(document).ready(function(){
         var codigo = <?php echo $codi ?>;
         var nom = $('#fname').val().trim();
-        var precio = $('#precio').val();
-        var renovacion = $('#renovacion').val();
+        var tipo_distribuidor = $('#tipo').val();
+        var email = $('#email').val();
         var request = $.ajax({
-            url: "../respuestas/respuestaEditarNombreDominio.php",
+            url: "../respuestas/respuestaEditarDistribuidor.php",
             method: "POST",
-            data: { codigo : codigo , nombre : nom , precio : precio , renovacion : renovacion}
+            data: { codigo : codigo , nombre : nom , tipo_distribuidor : tipo_distribuidor , email : email}
           });
            
           request.done(function( msg ) {
             
               alert(msg);
-              window.location.href = "nombre_dominios.php";
+              window.location.href = "distribuidores.php";
             
           });
            
@@ -80,9 +79,12 @@ input[type=submit]:hover {
 </script>
   </head>
   <body>
-  <?php include("Comun/verificarSesionDistri.php");
-    $sN = new ServicioNombreDominio();
-    $nombre_dominio = $sN->getName($codi);
+  <?php include("Comun/verificarSesionAdmin.php");
+
+                    include ('../mapeo/ServicioTipoDistribuidor.php');
+    $sN = new ServicioUsuario();
+    $usuario = $sN->getInfoUsuario($codi);
+    $distri = json_decode($sN->getInfoDistribuidor($codi));
   ?>
     <!-- END nav -->
 
@@ -92,22 +94,33 @@ input[type=submit]:hover {
 
     <section class="ftco-section bg-light" style="padding: 0 0 0 0">
       <div class="container text-center" style="max-width: 800px">
-        <h1 class="mb-3 bread">Editar nombre de dominio</h1>
+        <h1 class="mb-3 bread">Editar usuario</h1>
         <form action="javascript:registrar()">
-          <label for="fname" class="etiqueta">Nombre</label>
-                  <input type="text" id="fname" name="firstname" required placeholder="Nombre" value="<?php echo $nombre_dominio->nombre ?>">
+          <label for="fname" class="etiqueta">Nombre completo</label>
+                  <input type="text" id="fname" name="firstname" required placeholder="Nombre" value="<?php echo $usuario->nombre ?>">
               
 
               
-                <label for="edad" class="etiqueta">Precio</label>
-                <input type="text" required oninput="this.value = this.value.replace(/[^0-9.]/g, '')" maxlength="4" id="precio" name="precio_n" placeholder="Precio.." value="<?php echo $nombre_dominio->precio ?>">
+                <label for="email" class="etiqueta">E-mail</label>
+                <input type="text" required id="email" name="nemail" placeholder="E-mail.." value="<?php echo $usuario->email ?>">
 
-                <label for="edad" class="etiqueta">Precio renovación</label>
-                <input type="text" required oninput="this.value = this.value.replace(/[^0-9.]/g, '')" maxlength="4" id="renovacion" name="renovacion_n" placeholder="Renocacion.." value="<?php echo $nombre_dominio->renovacion ?>">
+                <label for="tipo" class="etiqueta">Tipo de distribuidor</label>
+                <select  id="tipo" name="ntipo" placeholder="Tipo">
+                  <?php
 
+                    $st = new ServicioTipoDistribuidor();
+                    $arr = $st->getAll();
+                    foreach($arr as $tipo){
+                      ?>
+                        <option value="<?php echo $tipo->codigo ?>" <?php if ($tipo->codigo == $distri->cod_tipo){ echo "selected";} ?>><?php echo $tipo->nombre ?></option>
+
+                      <?php
+                    }
+
+                  ?>
+                </select>
               
-                <input type="submit" value="Editar" style="background-color: #4DCAC7; border-width: 2px; border-style: solid; border-color: black;">
-              
+                <input type="submit" value="Registrar" style="background-color: #4DCAC7; border-width: 2px; border-style: solid; border-color: black;">
         
           
         </form>

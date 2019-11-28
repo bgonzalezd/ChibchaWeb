@@ -14,7 +14,7 @@ $audi = new ServicioAuditoria();
 
 $sC = new ServicioUsuario();
 $result = $sC->addDistribuidor($nombre,$clave,$nom_user,$email,$tipo);
-$audi->addAuditoria('USUARIO - DISTRIBUIDOR','Se ha agregado el distribuidor $nombre',$_SESSION['cod_user']);
+$audi->addAuditoria('USUARIO - DISTRIBUIDOR','Se ha agregado el distribuidor ' . $nombre,$_SESSION['cod_user']);
 $sCo = new ServicioCorreo();
 $sCo->enviarCorreoP("Bienvenido a Chibchaweb",$email,"<html><body>Le damos una cordial bienvenida a ChibchaWeb.<br>Su contraseña generada aleatoriamente es: $clave<body></html>");
 echo $result;

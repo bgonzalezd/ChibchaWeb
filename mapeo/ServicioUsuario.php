@@ -38,7 +38,7 @@ class ServicioUsuario{
 		return $arr;
 	}
 	public function getDistribuidores(){
-		$result = pg_query($this->conexion, "SELECT row_to_json(todo) FROM (SELECT * FROM USUARIO_T, DISTRIBUIDOR_T, TIPO_DISTRIBUIDOR_T WHERE USUARIO_T.codigo = DISTRIBUIDOR_T.codigo and DISTRIBUIDOR_T.cod_tipo = TIPO_DISTRIBUIDOR_T.codigo) as todo;");
+		$result = pg_query($this->conexion, "SELECT row_to_json(todo) FROM (SELECT USUARIO_T.codigo,USUARIO_T.nombre,USUARIO_T.email,TIPO_DISTRIBUIDOR_T.etiqueta, TIPO_DISTRIBUIDOR_T.codigo as cod_tipo FROM USUARIO_T, DISTRIBUIDOR_T, TIPO_DISTRIBUIDOR_T WHERE USUARIO_T.codigo = DISTRIBUIDOR_T.codigo and DISTRIBUIDOR_T.cod_tipo = TIPO_DISTRIBUIDOR_T.codigo) as todo;");
 		$arr = array();
 		if ($result) {
 	    // output data of each row
@@ -81,12 +81,9 @@ class ServicioUsuario{
 		if($u == null){
 			if(agregarEnTabla1($this->conexion,'USUARIO',$this->columns)){
 				$result = pg_query($this->conexion, "INSERT INTO USUARIO VALUES (nextval('llaveusuario'),'$nombre','$clave','$nom_user','D','$email');");
-			}else{
-				$result = pg_query($this->conexion, "SELECT dblink('$this->config','INSERT INTO USUARIO VALUES (nextval(''llaveusuario''),''$nombre'',''$clave'',''$nom_user'',''D'',''$email'');');");
-			}
-			if(agregarEnTabla1($this->conexion,'DISTRIBUIDOR',$this->columns_distribuidor)){
 				$result = pg_query($this->conexion, "INSERT INTO DISTRIBUIDOR VALUES (setval('llaveusuario',nextval('llaveusuario')-2),$tipo);");
 			}else{
+				$result = pg_query($this->conexion, "SELECT dblink('$this->config','INSERT INTO USUARIO VALUES (nextval(''llaveusuario''),''$nombre'',''$clave'',''$nom_user'',''D'',''$email'');');");
 				$result = pg_query($this->conexion, "SELECT dblink('$this->config','INSERT INTO DISTRIBUIDOR VALUES (setval(''llaveusuario'',nextval(''llaveusuario'')-2),$tipo);');");
 			}
 			return "true";
@@ -107,6 +104,35 @@ class ServicioUsuario{
 		    }
 		}
 		return $cliente;
+	}
+
+	public function getInfoDistribuidor($codigo){
+		$result = pg_query($this->conexion, "SELECT row_to_json(todo) FROM (SELECT * FROM DISTRIBUIDOR_T WHERE codigo = $codigo) AS todo;");
+		$cliente = null;
+		if ($result) {
+	    // output data of each row
+		    while($row = pg_fetch_row($result)) {
+		    	$cliente = $row[0];
+		    }
+		}
+		return $cliente;
+	}
+
+	public function editUsuario($codigo,$nombre, $nom_usuario, $email){
+		if(($codigo%2)!=0){
+			$result = pg_query($this->conexion, "UPDATE USUARIO SET nombre = '$nombre', nom_usuario = '$nom_usuario' , email = '$email' WHERE codigo = $codigo;");
+		}else{
+			$result = pg_query($this->conexion, "SELECT dblink('$this->config','UPDATE USUARIO SET nombre = ''$nombre'' , nom_usuario = ''$nom_usuario'' , email = ''$email'' WHERE codigo = $codigo;');");
+		}
+	}
+	public function editDistribuidor($codigo,$nombre, $email,$cod_tipo){
+		if(($codigo%2)!=0){
+			$result = pg_query($this->conexion, "UPDATE USUARIO SET nombre = '$nombre' , email = '$email' WHERE codigo = $codigo;");
+			$result = pg_query($this->conexion, "UPDATE DISTRIBUIDOR SET cod_tipo = $cod_tipo WHERE codigo = $codigo;");
+		}else{
+			$result = pg_query($this->conexion, "SELECT dblink('$this->config','UPDATE USUARIO SET nombre = ''$nombre'' , email = ''$email'' WHERE codigo = $codigo;');");
+			$result = pg_query($this->conexion, "SELECT dblink('$this->config','UPDATE DISTRIBUIDOR SET cod_tipo = $cod_tipo WHERE codigo = $codigo;');");
+		}
 	}
 
 }

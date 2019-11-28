@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <?php session_start();
-  include ("../mapeo/ServicioUsuario.php");?>
+  include ("../mapeo/ServicioUsuario.php");
+  include ("../mapeo/ServicioAuditoria.php");?>
 <html lang="en">
   <head>
-    <title>Usuarios</title>
+    <title>Auditoria</title>
     <?php include("Comun/head.html"); ?>
     <style>
 .mensajes {
@@ -25,14 +26,7 @@
 
 tr:nth-child(even){background-color: #f2f2f2}
 </style>
-<script type="text/javascript">
-  function irEditar(codigo){
-    $(document).ready(function(){
-      $('#in_cod_usuario').attr('value',codigo);
-      document.getElementById('formulario').submit();
-    });
-  }
-</script>
+
  </head>
   <body>
   <?php include("Comun/verificarSesionAdmin.php"); ?>
@@ -43,7 +37,7 @@ tr:nth-child(even){background-color: #f2f2f2}
       
     </div>
 
-    <h1 style="margin-top: 50px;width: 100%" align="center">Usuarios</h1>  
+    <h1 style="margin-top: 50px;width: 100%" align="center">Auditoria</h1>  
 
     <section class="ftco-section bg-light" style="padding: 60px 60px 60px 60px;background-color: white" > 
 <!------ Include the above in your HEAD tag ---------->
@@ -51,32 +45,30 @@ tr:nth-child(even){background-color: #f2f2f2}
                 <div style="overflow-x:auto;max-height: 700px;height: 100%">
                   <table class="mensajes" style="vertical-align: top;height: 100%;border: 2px solid black">
                     <tr class="fila">
-                        <th class="columna">Nombre completo</th>
-                        <th class="columna">Nombre de usuario</th>
-                        <th class="columna">Email</th>
-                        <th class="columna">Acción</th>
+                        <th class="columna">Tabla modificada</th>
+                        <th class="columna">Acción realizada</th>
+                        <th class="columna">Usuario</th>
+                        <th class="columna">Email del usuario</th>
+                        <th class="columna">Fecha</th>
                       </tr>
                     <?php
 
-                        $su = new ServicioUsuario();
-                        $arr = $su->getClientes();
-                        foreach ($arr as $cliente){
+                        $su = new ServicioAuditoria();
+                        $arr = $su->getAll();
+                        foreach ($arr as $texto){
+                          $auditoria = json_decode($texto)
                           ?>
                             <tr class="fila">
-                              <td class="columna"><?php echo $cliente->nombre; ?></td>
-                              <td class="columna"><?php echo $cliente->nom_usuario; ?></td>
-                              <td class="columna"><?php echo $cliente->email; ?></td>
-                                <td class="columna" style="width: 10%">
-                                  <button style="width:40%;background-color: transparent;" onclick="irEditar(<?php echo $cliente->codigo ?>)"><img style="width: 100%;height: 100%" src="../images/edit.png"/></button></td>
+                              <td class="columna"><?php echo $auditoria->tabla; ?></td>
+                              <td class="columna"><?php echo $auditoria->accion; ?></td>
+                              <td class="columna"><?php echo $auditoria->nombre; ?></td>
+                              <td class="columna"><?php echo $auditoria->email; ?></td>
+                              <td class="columna"><?php echo $auditoria->fecha; ?></td>
                             </tr>
                           <?php
                         }
                     ?>
                   </table>
-                  <form id="formulario" action="editarUsuario.php" method="POST">
-
-                          <input type="hidden" id="in_cod_usuario" name="cod_usuario" />
-                      </form>
                 </div> 
               
         </div>

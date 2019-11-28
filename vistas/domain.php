@@ -101,42 +101,6 @@
         <input type="hidden" id="in_nom_dominio" name="nombre_dominio" />
     </form>
 
-    <!--<section class="ftco-section">
-    	<div class="container">
-    		<div class="row justify-content-center mb-5">
-          <div class="col-md-7 text-center heading-section ftco-animate">
-            <span class="subheading">Dominios</span>
-            <h2 class="mb-4">Nombre de dominios disponibles</h2>
-          </div>
-        </div>
-    		<div class="row">
-    			<div class="col-md-12 ftco-animate">
-    				<div class="table-responsive">
-	    				<table class="table">
-						    <thead class="thead-primary">
-						      <tr>
-						        <th>TLD</th>
-						        <th>Duración</th>
-						      </tr>
-						    </thead>
-						    <tbody>
-						      <?php
-
-                    /*$servicioNombreDominio = new ServicioNombreDominio();
-                    $nombres = $servicioNombreDominio->getAll();
-                    foreach ($nombres as $nombre) {
-                      echo "<tr> <td>.$nombre->nombre</td> <td>$nombre->duracion_meses meses</td>  </tr>";
-                    }*/
-
-                  ?>
-						    </tbody>
-						  </table>
-					  </div>
-    			</div>
-    		</div>
-    	</div>
-    </section>-->
-
 
    <?php include("Comun/footer.html"); ?>
    <?php include("Comun/verificarSesionComun2.php"); ?>

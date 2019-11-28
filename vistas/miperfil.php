@@ -258,9 +258,9 @@
                                                                 <p align="center">ChibchaPlata</p>
                                                             </div>
                                                             <?php
-                                                        }else if($dom->estado=="2"){
+                                                        }else if($hos->tipo=="2"){
                                                             ?><div class="col-md-3">
-                                                                <p align="center" class="but">ChibchaOro</p>
+                                                                <p align="center">ChibchaOro</p>
                                                             </div>
                                                             <?php
                                                         }else{

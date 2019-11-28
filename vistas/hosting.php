@@ -290,8 +290,8 @@ button:hover {
 
         <label for="psw"><b>Elija el sistema operativo</b></label>
         <select id="sistema">
-        	<option value="Linux">Ubuntu 18.04</option>
-        	<option value="Windows">Windows Server 2016</option>
+          <option value="Linux">Ubuntu 18.04</option>
+          <option value="Windows">Windows Server 2016</option>
         </select>
 
         <div id="msg_inicio" style="width: 100%;align-content: center;"></div>
@@ -302,9 +302,10 @@ button:hover {
   </div>
 
     
+
+    
     <?php include("Comun/footer.html"); ?>
     
-   <?php include("Comun/verificarSesionComun2.php"); ?>
   
 
   <!-- loader -->

@@ -1,4 +1,5 @@
 <?php
+session_start();
 $cod_usuario = $_POST['cod_usuario'];
 $mensaje = $_POST['mensaje'];
 $asunto = $_POST['asunto'];

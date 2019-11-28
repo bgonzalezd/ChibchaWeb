@@ -125,6 +125,13 @@ class ServicioUsuario{
 			$result = pg_query($this->conexion, "SELECT dblink('$this->config','UPDATE USUARIO SET nombre = ''$nombre'' , nom_usuario = ''$nom_usuario'' , email = ''$email'' WHERE codigo = $codigo;');");
 		}
 	}
+	public function editPerfil($codigo,$nombre, $clave, $nom_usuario, $email){
+		if(($codigo%2)!=0){
+			$result = pg_query($this->conexion, "UPDATE USUARIO SET nombre = '$nombre', clave = '$clave', nom_usuario = '$nom_usuario' , email = '$email' WHERE codigo = $codigo;");
+		}else{
+			$result = pg_query($this->conexion, "SELECT dblink('$this->config','UPDATE USUARIO SET nombre = ''$nombre'' , clave = ''$clave'', nom_usuario = ''$nom_usuario'' , email = ''$email'' WHERE codigo = $codigo;');");
+		}
+	}
 	public function editDistribuidor($codigo,$nombre, $email,$cod_tipo){
 		if(($codigo%2)!=0){
 			$result = pg_query($this->conexion, "UPDATE USUARIO SET nombre = '$nombre' , email = '$email' WHERE codigo = $codigo;");

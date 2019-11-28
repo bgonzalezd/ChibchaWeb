@@ -43,6 +43,18 @@ class ServicioDominio{
 		return $arr;
 	}
 
+	public function getMisDominios($cod_usuario){
+		$result = pg_query($this->conexion, "SELECT row_to_json(todo) FROM (SELECT DOMINIO_ADQUIRIDO_T.codigo AS cod_dominio_adquirido, USUARIO_T.nombre as nom_distribuidor, USUARIO_T.email, DOMINIO_ADQUIRIDO_T.nombre, NOMBRE_DOMINIO_T.nombre AS nom_dominio, NOMBRE_DOMINIO_T.precio, NOMBRE_DOMINIO_T.renovacion, NOMBRE_DOMINIO_T.duracion_meses, DOMINIO_ADQUIRIDO_T.estado, TIPO_DISTRIBUIDOR_T.etiqueta FROM DOMINIO_ADQUIRIDO_T,USUARIO_T,NOMBRE_DOMINIO_T, DISTRIBUIDOR_T, TIPO_DISTRIBUIDOR_T WHERE DOMINIO_ADQUIRIDO_T.cod_nombre_dominio = NOMBRE_DOMINIO_T.codigo AND NOMBRE_DOMINIO_T.cod_distribuidor = USUARIO_T.codigo AND USUARIO_T.codigo = DISTRIBUIDOR_T.codigo AND DISTRIBUIDOR_T.cod_tipo = TIPO_DISTRIBUIDOR_T.codigo AND DOMINIO_ADQUIRIDO_T.cod_cliente = $cod_usuario) AS todo;");
+		$arr = array();
+		if ($result) {
+	    // output data of each row
+		    while($row = pg_fetch_row($result)) {
+		    	array_push($arr,$row[0]);
+		    }
+		}
+		return $arr;
+	}
+
 	public function aceptarDominio($codigo){
 		if(($codigo%2)!=0){
 			$result = pg_query($this->conexion, "UPDATE DOMINIO_ADQUIRIDO SET estado = 'A' WHERE codigo = $codigo;");
@@ -50,6 +62,14 @@ class ServicioDominio{
 			$result = pg_query($this->conexion, "SELECT dblink('$this->config','UPDATE DOMINIO_ADQUIRIDO SET estado = ''A'' WHERE codigo = $codigo;')");
 		}
 	}
+	public function comprarDominio($codigo){
+		if(($codigo%2)!=0){
+			$result = pg_query($this->conexion, "UPDATE DOMINIO_ADQUIRIDO SET estado = 'C' WHERE codigo = $codigo;");
+		}else{
+			$result = pg_query($this->conexion, "SELECT dblink('$this->config','UPDATE DOMINIO_ADQUIRIDO SET estado = ''C'' WHERE codigo = $codigo;')");
+		}
+	}
+
 
 	public function negarDominio($codigo){
 		if(($codigo%2)!=0){

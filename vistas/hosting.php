@@ -4,6 +4,141 @@
   <head>
     <title>Hostings</title>
     <?php include("Comun/head.html"); ?>
+    <style>
+
+      input[type=text], input[type=password], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+   
+
+    /* Extra styles for the cancel button */
+    .cancelbtn {
+      width: auto;
+      padding: 10px 18px;
+      background-color: #f44336;
+    }
+
+
+    .container {
+      padding: 16px;
+    }
+
+    span.psw {
+      float: right;
+      padding-top: 16px;
+    }
+
+    /* The Modal (background) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      padding-top: 60px;
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button (x) */
+    .close {
+      position: absolute;
+      right: 25px;
+      top: 0;
+      color: #000;
+      font-size: 35px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: red;
+      cursor: pointer;
+    }
+
+    /* Add Zoom Animation */
+    .animate {
+      -webkit-animation: animatezoom 0.6s;
+      animation: animatezoom 0.6s
+    }
+
+    @-webkit-keyframes animatezoom {
+      from {-webkit-transform: scale(0)} 
+      to {-webkit-transform: scale(1)}
+    }
+      
+    @keyframes animatezoom {
+      from {transform: scale(0)} 
+      to {transform: scale(1)}
+    }
+
+    /* Change styles for span and cancel button on extra small screens */
+    @media screen and (max-width: 300px) {
+      span.psw {
+         display: block;
+         float: none;
+      }
+      .cancelbtn {
+         width: 100%;
+      }
+    }
+    </style>
+    <script type="text/javascript">
+      function comprar(){
+        $(document).ready(function(){
+          var tipo = $('#inicio_modal2').attr('data-cod');
+          var nombre = $('#nhosting').val().trim();
+          var sistema = $('#sistema').val();
+          var request = $.ajax({
+            url: "../respuestas/respuestaAgregarHosting.php",
+            method: "POST",
+              data: { nombre : nombre , sistema : sistema , tipo : tipo}
+          });
+           
+          request.done(function( msg ) {
+            
+              var id = '#pago_c'+tipo;
+              $(id).submit();
+            
+          });
+           
+          request.fail(function( jqXHR, textStatus ) {
+            console.log( "Request failed: " + textStatus );
+          });
+        });
+      }
+    </script>
   </head>
   <body>
     
@@ -35,8 +170,14 @@
 	          <div class="block-7">
 	            <div class="text-center">
 	            <h2 class="heading">Plata</h2>
-	            <span class="price"><sup>$</sup> <span class="number">25.000 / mes</span></span>
-	            <a href="#" class="btn btn-primary d-block px-3 py-3 mb-4">Comprar</a>
+	            <span class="price"><sup>$</sup> <span class="number">7.28 / mes</span></span>
+
+<form action="https://www.paypal.com/cgi-bin/webscr" id="pago_c1" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="27VS5XADBWPHG">
+
+	            <input type="button" name="pay_now" id="pay_now" style="width: 100%" onclick="document.getElementById('inicio_modal2').style.display='block';$(document).ready(function(){$('#inicio_modal2').attr('data-cod','1');})" value="Comprar" class="btn btn-primary d-block px-3 py-3 mb-4">
+            </form>
 	            
 	            <h3 class="heading-2 mb-3">Disfruta de las siguientes características</h3>
 	            
@@ -52,8 +193,12 @@
 	          <div class="block-7">
 	            <div class="text-center">
 	            <h2 class="heading">Oro</h2>
-	            <span class="price"><sup>$</sup> <span class="number">50.000 / mes</span></span>
-	            <a href="#" class="btn btn-primary d-block px-3 py-3 mb-4">Comprar</a>
+	            <span class="price"><sup>$</sup> <span class="number">14.56 / mes</span></span>
+              <form action="https://www.paypal.com/cgi-bin/webscr" id="pago_c2" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="WU94GBMFHJDZC">
+	            <input type="button" name="pay_now" id="pay_now" style="width: 100%" onclick="document.getElementById('inicio_modal2').style.display='block';$(document).ready(function(){$('#inicio_modal2').attr('data-cod','2');})" value="Comprar" class="btn btn-primary d-block px-3 py-3 mb-4">
+            </form>
 	            
 	            <h3 class="heading-2 mb-3">Disfruta de las siguientes características</h3>
 	            
@@ -69,8 +214,13 @@
 	         <div class="block-7">
 	            <div class="text-center">
 	            <h2 class="heading">Platino</h2>
-	            <span class="price"><sup>$</sup> <span class="number">75.000 / mes</span></span>
-	            <a href="#" class="btn btn-primary d-block px-3 py-3 mb-4">Comprar</a>
+	            <span class="price"><sup>$</sup> <span class="number">21.85 / mes</span></span>
+
+<form action="https://www.paypal.com/cgi-bin/webscr" id="pago_c3" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="NY6LDFFSQ6QWE">
+	            <input type="button" name="pay_now" id="pay_now" style="width: 100%" onclick="document.getElementById('inicio_modal2').style.display='block';$(document).ready(function(){$('#inicio_modal2').attr('data-cod','3');})" value="Comprar" class="btn btn-primary d-block px-3 py-3 mb-4">
+            </form>
 	            
 	            <h3 class="heading-2 mb-3">Disfruta de las siguientes características</h3>
 	            
@@ -126,94 +276,30 @@
       </div>
     </section>
 
-   <!-- <section class="ftco-section bg-light">
-    	<div class="container">
-    		<div class="row justify-content-center mb-5">
-          <div class="col-md-7 text-center heading-section ftco-animate">
-            <span class="subheading">Facts</span>
-            <h2 class="mb-4">Your Question</h2>
-          </div>
-        </div>
-    		<div class="row">
-    			<div class="col-md-12">
-    				<div id="accordion">
-    					<div class="row">
-    						<div class="col-md-6">
-    							<div class="card">
-						        <div class="card-header">
-										  <a class="card-link" data-toggle="collapse"  href="#menuone" aria-expanded="true" aria-controls="menuone">What is your domain name? <span class="collapsed"><i class="icon-plus-circle"></i></span><span class="expanded"><i class="icon-minus-circle"></i></span></a>
-						        </div>
-						        <div id="menuone" class="collapse show">
-						          <div class="card-body">
-												<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-						          </div>
-						        </div>
-						      </div>
+    <div id="inicio_modal2" class="modal">
+  
+  <div class="modal-content animate" style="width: 50%">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('inicio_modal2').style.display='none'" class="close" title="Close Modal">&times;</span>
+    </div>
 
-						      <div class="card">
-						        <div class="card-header">
-										  <a class="card-link" data-toggle="collapse"  href="#menutwo" aria-expanded="false" aria-controls="menutwo">How long is my domain name valid? <span class="collapsed"><i class="icon-plus-circle"></i></span><span class="expanded"><i class="icon-minus-circle"></i></span></a>
-						        </div>
-						        <div id="menutwo" class="collapse">
-						          <div class="card-body">
-												<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-						          </div>
-						        </div>
-						      </div>
+    <div class="container">
+      <form action="javascript:ingresar()">
+        <label for="nhosting"><b>Nombre del hosting</b></label>
+        <input type="text" placeholder="Enter Username" id="nhosting" required>
 
-						      <div class="card">
-						        <div class="card-header">
-										  <a class="card-link" data-toggle="collapse"  href="#menu3" aria-expanded="false" aria-controls="menu3">Can I sell my domain name? <span class="collapsed"><i class="icon-plus-circle"></i></span><span class="expanded"><i class="icon-minus-circle"></i></span></a>
-						        </div>
-						        <div id="menu3" class="collapse">
-						          <div class="card-body">
-												<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-						          </div>
-						        </div>
-						      </div>
-    						</div>
+        <label for="psw"><b>Elija el sistema operativo</b></label>
+        <select id="sistema">
+        	<option value="Linux">Ubuntu 18.04</option>
+        	<option value="Windows">Windows Server 2016</option>
+        </select>
 
-    						<div class="col-md-6">
-    							<div class="card">
-						        <div class="card-header">
-										  <a class="card-link" data-toggle="collapse"  href="#menu4" aria-expanded="false" aria-controls="menu4">Can I cancel a domain? <span class="collapsed"><i class="icon-plus-circle"></i></span><span class="expanded"><i class="icon-minus-circle"></i></span></a>
-						        </div>
-						        <div id="menu4" class="collapse">
-						          <div class="card-body">
-												<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-						          </div>
-						        </div>
-						      </div>
-
-						      <div class="card">
-						        <div class="card-header">
-										  <a class="card-link" data-toggle="collapse"  href="#menu5" aria-expanded="false" aria-controls="menu5">How do I transfer a domain name? <span class="collapsed"><i class="icon-plus-circle"></i></span><span class="expanded"><i class="icon-minus-circle"></i></span></a>
-						        </div>
-						        <div id="menu5" class="collapse">
-						          <div class="card-body">
-												<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-						          </div>
-						        </div>
-						      </div>
-
-						      <div class="card">
-						        <div class="card-header">
-										  <a class="card-link" data-toggle="collapse"  href="#menu6" aria-expanded="false" aria-controls="menu6">How do I setup URL forwarding? <span class="collapsed"><i class="icon-plus-circle"></i></span><span class="expanded"><i class="icon-minus-circle"></i></span></a>
-						        </div>
-						        <div id="menu6" class="collapse">
-						          <div class="card-body">
-												<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-						          </div>
-						        </div>
-						      </div>
-    						</div>
-    					</div>
-				    </div>
-    			</div>
-    		</div>
-    	</div>
-    </section>-->
-
+        <div id="msg_inicio" style="width: 100%;align-content: center;"></div>
+          
+        <button type="button" onclick="comprar();" class="search-domain btn btn-primary px-5" style="margin-top: 30px">Comprar</button>
+      </form>
+    </div>
+  </div>
 
     
     <?php include("Comun/footer.html"); ?>

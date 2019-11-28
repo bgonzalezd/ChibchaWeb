@@ -1,7 +1,10 @@
 <!DOCTYPE html>
+<?php session_start();
+  include ("../mapeo/ServicioUsuario.php");
+  include ("../mapeo/ServicioNombreDominio.php");?>
 <html lang="en">
   <head>
-    <title>Registro</title>
+    <title>Editar nombre de dominio</title>
     <?php include("Comun/head.html"); ?>
     
     <style>
@@ -50,6 +53,7 @@ input[type=submit]:hover {
 }
 </style>
 <script type="text/javascript">
+
     
 
     function registrar() {
@@ -60,25 +64,22 @@ input[type=submit]:hover {
         var c1 = $('#clave').val().trim();
         var c2 = $('#clave2').val().trim();
         if(c1.localeCompare(c2)==0){
-          var request = $.ajax({
-              url: "../respuestas/respuestaRegistro.php",
-              method: "POST",
+            var request = $.ajax({
+            url: "../respuestas/respuestaEditarPerfil.php",
+            method: "POST",
               data: { nombre : nom , clave : c1 , nom_user : user , email : email}
-            });
-             
-            request.done(function( msg ) {
-              if(msg == 'false'){
-                alert('Usuario ya existe');
-              }else{
-                alert('Agregado correctamente');
-                window.location.href = "index.php";
-              }
-              
-            });
-             
-            request.fail(function( jqXHR, textStatus ) {
-              console.log( "Request failed: " + textStatus );
-            });
+          });
+           
+          request.done(function( msg ) {
+            
+              alert(msg);
+              window.location.href = "miperfil.php";
+            
+          });
+           
+          request.fail(function( jqXHR, textStatus ) {
+            console.log( "Request failed: " + textStatus );
+          });
         }else{
           alert("Las constraseñas no son iguales");
 
@@ -89,8 +90,10 @@ input[type=submit]:hover {
 </script>
   </head>
   <body>
-  
-  <?php include("Comun/menuSinSesion.html"); ?>
+  <?php include("Comun/verificarSesionNormal.php");
+    $sN = new ServicioUsuario();
+    $usuario = $sN->getInfoUsuario($_SESSION['cod_user']);
+  ?>
     <!-- END nav -->
 
     <!-- <div class="js-fullheight"> -->
@@ -99,25 +102,27 @@ input[type=submit]:hover {
 
     <section class="ftco-section bg-light" style="padding: 0 0 0 0">
       <div class="container text-center" style="max-width: 800px">
-        <h1 class="mb-3 bread">Registrar</h1>
+        <h1 class="mb-3 bread">Editar nombre de dominio</h1>
         <form action="javascript:registrar()">
           <label for="fname" class="etiqueta">Nombre completo</label>
-                  <input type="text" id="fname" name="firstname" required placeholder="Tu nombre completo">
+                  <input type="text" id="fname" name="firstname" required placeholder="Tu nombre completo" value="<?php echo $usuario->nombre ?>">
               
 
               
                 <label for="email" class="etiqueta">E-mail</label>
-                <input type="text" required id="email" name="nemail" placeholder="Tu e-mail..">
+                <input type="text" required id="email" name="nemail" placeholder="Tu e-mail.." value="<?php echo $usuario->email ?>">
 
                 <label for="usuario" class="etiqueta">Nombre de usuario</label>
-                <input type="text" required id="usuario" name="nusuario" placeholder="Tu nombre de usuario..">
-              <label for="clave" class="etiqueta">Contraseña</label>
-                  <input type="password" required id="clave" name="claveu" placeholder="Tu contraseña..">
+                <input type="text" required id="usuario" name="nusuario" placeholder="Tu nombre de usuario.." value="<?php echo $usuario->nom_usuario ?>">
+
+              <label for="clave" class="etiqueta">Nueva contraseña</label>
+                  <input type="password" required id="clave" name="claveu" placeholder="Tu contraseña.." value="<?php echo $usuario->clave ?>">
              
                 <label for="clave2" class="etiqueta">Repetir contraseña</label>
                 <input type="password" required id="clave2" name="claveu2" placeholder="Tu contraseña..">
+
               
-                <input type="submit" value="Registrar" style="background-color: #4DCAC7; border-width: 2px; border-style: solid; border-color: black;">
+                <input type="submit" value="Editar" style="background-color: #4DCAC7; border-width: 2px; border-style: solid; border-color: black;">
               
         
           

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <?php session_start();
-  include ("../mapeo/ServicioUsuario.php");?>
+  include ("../mapeo/ServicioUsuario.php");
+  include ("../mapeo/ServicioDominio.php");
+  include ("../mapeo/ServicioHosting.php");?>
 <html lang="en">
   <head>
     <title>Mi perfil</title>
@@ -98,7 +100,33 @@
     font-weight: 600;
     color: #0062cc;
 }
+.but{
+    border:1px solid blue;
+      cursor: pointer;
+}
     </style>
+    <script type="text/javascript">
+        function comprar(codigo,email, precio, etiqueta,nombre){
+            $(document).ready(function(){
+                  var request = $.ajax({
+                    url: "../respuestas/respuestaComprarDominio.php",
+                    method: "POST",
+                      data: { codigo : codigo, email : email, precio : precio, etiqueta : etiqueta, nombre : nombre}
+                  });
+                   
+                  request.done(function( msg ) {
+                    
+                      $('#pago').submit();
+                    
+                  });
+                   
+                  request.fail(function( jqXHR, textStatus ) {
+                    console.log( "Request failed: " + textStatus );
+                  });
+
+            });
+        }
+    </script>
   </head>
   <body>
   <?php include("Comun/verificarSesionNormal.php"); ?>
@@ -133,11 +161,14 @@
                                     <h6>
                                         <?php echo $cli->nom_usuario ?>
                                     </h6>
+                                    <h5>
+                                        <?php echo $cli->email ?>
+                                    </h5>
                             
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                        <input type="button" onclick="window.location.href = 'editarPerfil.php'" class="profile-edit-btn" name="btnAddMore" value="Editar perfil"/>
                     </div>
                 </div>
                 <div class="row" style="margin-top: 30px">
@@ -145,102 +176,113 @@
                     <div class="col-md-8">
                         <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-bottom: 20px">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Dominios</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Hostings</a>
                                 </li>
                             </ul>
                         <div class="tab-content profile-tab" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>User Id</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Kshiti123</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Name</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Kshiti Ghelani</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Email</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>kshitighelani@gmail.com</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Phone</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>123 456 7890</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Profession</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Web Developer and Designer</p>
-                                            </div>
-                                        </div>
+                                        
+                                        <?php 
+
+                                            $sD = new ServicioDominio();
+                                            $arr = $sD->getMisDominios($_SESSION['cod_user']);
+                                            foreach($arr as $texto){
+                                                $dom = json_decode($texto);
+                                                ?>
+
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <p><?php echo $dom->nombre . "." . $dom->nom_dominio ?></p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p><?php echo $dom->nom_distribuidor ?></p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p>$<?php echo $dom->precio ?></p>
+                                                        </div>
+                                                        <?php if($dom->estado=="C"){
+                                                            ?><div class="col-md-3">
+                                                                <p align="center">Adquirido</p>
+                                                            </div>
+                                                            <?php
+                                                        }else if($dom->estado=="A"){
+                                                            ?>
+                                                            <form action="https://www.paypal.com/cgi-bin/webscr" id="pago" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="WU94GBMFHJDZC"><div class="col-md-3" name="pay_now" id="pay_now" onclick="comprar(<?php echo $dom->cod_dominio_adquirido ?>,'<?php echo $dom->email ?>',<?php echo $dom->precio ?>,'<?php echo $dom->etiqueta ?>','<?php echo $dom->nombre . '.' . $dom->nom_dominio ?>')">
+                                                                <p align="center" class="but">Comprar</p>
+                                                            </div></form>
+                                                            <?php
+                                                        }else{
+                                                            ?><div class="col-md-3">
+                                                                <p align="center">Pendiente</p>
+                                                            </div>
+                                                            <?php
+                                                        }
+
+                                                        ?>
+                                                        
+                                                    </div>
+                                                <?php
+                                            }
+
+
+
+
+                                         ?>
+
                             </div>
+                            
+
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Experience</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Expert</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Hourly Rate</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>10$/hr</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Total Projects</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>230</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>English Level</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Expert</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Availability</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>6 months</p>
-                                            </div>
-                                        </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label>Your Bio</label><br/>
-                                        <p>Your detail description</p>
-                                    </div>
-                                </div>
+                                       <?php 
+
+                                            $sD = new ServicioHosting();
+                                            $arr = $sD->getMisHosting($_SESSION['cod_user']);
+                                            foreach($arr as $texto){
+                                                $hos = json_decode($texto);
+                                                ?>
+
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <p><?php echo $hos->nombre ?></p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p><?php if($hos->sistema_operativo=='Linux'){echo "Ubuntu 18.04";}else{echo "Windows server 2016";} ?></p>
+                                                        </div>
+                                                        <?php if($hos->tipo=="1"){
+                                                            ?><div class="col-md-3">
+                                                                <p align="center">ChibchaPlata</p>
+                                                            </div>
+                                                            <?php
+                                                        }else if($dom->estado=="2"){
+                                                            ?><div class="col-md-3">
+                                                                <p align="center" class="but">ChibchaOro</p>
+                                                            </div>
+                                                            <?php
+                                                        }else{
+                                                            ?><div class="col-md-3">
+                                                                <p align="center">ChibchaPlatino</p>
+                                                            </div>
+                                                            <?php
+                                                        }
+
+                                                        ?>
+                                                        <div class="col-md-3">
+                                                                <p align="center">Adquirido</p>
+                                                            </div>
+                                                        
+                                                    </div>
+                                                <?php
+                                            }
+
+
+
+
+                                         ?>
                             </div>
                         </div>
                     </div>

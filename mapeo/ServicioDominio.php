@@ -20,6 +20,18 @@ class ServicioDominio{
 		}
 	}
 
+	public function getCuentas(){
+		$result = pg_query($this->conexion, "SELECT row_to_json(todo) FROM (SELECT USUARIO_T.nombre as nombre_distribuidor, USUARIO_T.email, SUM(NOMBRE_DOMINIO_T.precio) as ventas_totales, SUM(NOMBRE_DOMINIO_T.precio*TIPO_DISTRIBUIDOR_T.valor) as valor_a_pagar FROM USUARIO_T, DISTRIBUIDOR_T, DOMINIO_ADQUIRIDO_T, NOMBRE_DOMINIO_T, TIPO_DISTRIBUIDOR_T WHERE DISTRIBUIDOR_T.codigo = USUARIO_t.codigo AND DISTRIBUIDOR_T.codigo = NOMBRE_DOMINIO_t.cod_distribuidor AND DOMINIO_ADQUIRIDO_T.cod_nombre_dominio = NOMBRE_DOMINIO_T.codigo AND DISTRIBUIDOR_T.cod_tipo = TIPO_DISTRIBUIDOR_T.codigo GROUP BY (USUARIO_T.nombre, USUARIO_T.email)) as todo;");
+		$arr = array();
+		if ($result) {
+	    // output data of each row
+		    while($row = pg_fetch_row($result)) {
+		    	array_push($arr,$row[0]);
+		    }
+		}
+		return $arr;
+	}
+
 	public function getInactivos($cod_distribuidor){
 		$result = pg_query($this->conexion, "SELECT row_to_json(todo) FROM (SELECT DOMINIO_ADQUIRIDO_T.codigo AS cod_dominio_adquirido, USUARIO_T.nombre as nom_cliente, USUARIO_T.email, DOMINIO_ADQUIRIDO_T.nombre, NOMBRE_DOMINIO_T.nombre AS nom_dominio, NOMBRE_DOMINIO_T.precio, NOMBRE_DOMINIO_T.renovacion, NOMBRE_DOMINIO_T.duracion_meses FROM DOMINIO_ADQUIRIDO_T,USUARIO_T,NOMBRE_DOMINIO_T WHERE DOMINIO_ADQUIRIDO_T.cod_nombre_dominio = NOMBRE_DOMINIO_T.codigo AND DOMINIO_ADQUIRIDO_T.cod_cliente = USUARIO_T.codigo AND DOMINIO_ADQUIRIDO_T.estado = 'I' AND NOMBRE_DOMINIO_T.cod_distribuidor = $cod_distribuidor) AS todo;");
 		$arr = array();

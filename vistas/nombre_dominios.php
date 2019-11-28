@@ -45,29 +45,46 @@ tr:nth-child(even){background-color: #f2f2f2}
     </div>
 
     <h1 style="margin-top: 50px;width: 100%" align="center">Nombre de dominios</h1>
-    <table>
-        <tr>
-          <td>
-            <a href="agregarNombreDominio.php">
-              <input type="button" value="Agregar nombre" class="btn btn-primary py-3 px-5" style="background-color: blue;color: white">
-            </a>
-          </td>
-        </tr>
-      </table>   
 
-    <section class="ftco-section bg-light" style="padding: 60px 60px 60px 60px;background-color: white" > 
-<!------ Include the above in your HEAD tag ---------->
-        <div style=" align-content: center; width: 100%;height: 100%;background-color: white">
-                <div style="overflow-x:auto;max-height: 700px;height: 100%;background-color: white">
-                    <table class="mensajes" style="vertical-align: top;height: 100%;border: 2px solid black">
-                      <tr class="fila">
-                        <th class="columna">Nombre del dominio</th>
-                        <th class="columna">Duración</th>
-                        <th class="columna">Precio</th>
-                        <th class="columna">Renovación</th>
-                        <th class="columna">Acción</th>
-                      </tr>
-                      <?php
+
+    <div class="container-fluid">
+
+    <div class="row">
+          <div class="col-xl-3 col-sm-3 mb-5">
+            <div class="card text-white bg-primary o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-comments"></i>
+                </div>
+                <div class="mr-5">Agregar Nombre!</div>
+              </div>
+              <a class="card-footer text-white clearfix small z-1" href="agregarNombreDominio.php">
+                <span class="float-left" >AGREGAR!</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Area Chart Example-->
+            <div class="card mb-3">
+              <div class="card-header">
+                <i class="fas fa-chart-area" > </i>
+                Nombres de dominios
+              </div>
+                <div class="card-body">
+                  <table border="1" id="lista" data-titulo="Nombres de dominios" class="table table-striped table-bordered" width="100%" >
+                    <thead >
+                      <td align="center">Nombre del dominio</td>
+                      <td align="center">Duración</td>
+                      <td align="center">Precio</td>
+                      <td align="center">Renovación</td>
+                      <th class="columna">Acción</th>
+                    </thead>
+                    <tbody id="cuerpo">
+                         <?php
 
                           $su = new ServicioNombreDominio();
                           $arr = $su->getNamesInfo($_SESSION['cod_user']);
@@ -79,23 +96,28 @@ tr:nth-child(even){background-color: #f2f2f2}
                                 <td class="columna">$ <?php echo $nom->precio; ?></td>
                                 <td class="columna">$ <?php echo $nom->renovacion; ?></td>
                                 <td class="columna" style="width: 10%">
-                                  <button style="width:40%;background-color: transparent;" onclick="irEditar(<?php echo $nom->codigo ?>)"><img style="width: 100%;height: 100%" src="../images/edit.png"/></button></td>
+                                  <button class="btn btn-outline-warning" onclick="irEditar(<?php echo $nom->codigo ?>)">Modificar</button></td>
                               </tr>
                             <?php
                           }
                       ?>
-                    </table>
-                    
-                      <form id="formulario" action="editarNombreDominio.php" method="POST">
+                    </tbody>
+                    <tfoot>
+                      <td align="center">Nombre del dominio</td>
+                      <td align="center">Duración</td>
+                      <td align="center">Precio</td>
+                      <td align="center">Renovación</td>
+                      <th class="columna">Acción</th>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              <form id="formulario" action="editarNombreDominio.php" method="POST">
+                <input type="hidden" name="cod_nombre" id="in_cod_nombre">
+              </form>
 
-                          <input type="hidden" id="in_cod_nombre" name="cod_nombre" />
-                      </form>
-                </div> 
-              
-        </div>
-        
-    </section>
-
+      </div>
+    </div>
 
     <?php include("Comun/footer.html") ; ?>
   

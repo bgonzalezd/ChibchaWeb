@@ -64,9 +64,12 @@ input[type=submit]:hover {
           });
            
           request.done(function( msg ) {
-            
-              alert(msg);
-              window.location.href = "lista_usuarios.php";
+              if(msg == 'true'){
+                alert("Editado correctamente");
+                window.location.href = "lista_usuarios.php";
+              }else{
+                alert("Usuario ya existe");
+              }
             
           });
            

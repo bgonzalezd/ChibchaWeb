@@ -42,30 +42,46 @@ tr:nth-child(even){background-color: #f2f2f2}
     <div id="base" style="background-image: url('../images/fondo.png'); background-size: 100% 100%;">
       
     </div>
-
     <h1 style="margin-top: 50px;width: 100%" align="center">Distribuidores</h1>
-    <table>
-        <tr>
-          <td>
-            <a href="agregarDistribuidor.php">
-              <input type="button" value="Agregar distribuidor" class="btn btn-primary py-3 px-5" style="background-color: blue;color: white">
-            </a>
-          </td>
-        </tr>
-      </table>   
+    <div id="content-wrapper">
 
-    <section class="ftco-section bg-light" style="padding: 60px 60px 60px 60px;background-color: white" > 
-<!------ Include the above in your HEAD tag ---------->
-        <div style=" align-content: center; width: 100%;height: 100%">
-                <div style="overflow-x:auto;max-height: 700px;height: 100%">
-                  <table class="mensajes" style="vertical-align: top;height: 100%;border: 2px solid black">
-                    <tr class="fila">
-                        <th class="columna">Nombre del distribuidor</th>
-                        <th class="columna">Email del distribuidor</th>
-                        <th class="columna">Categoría del distribuidor</th>
-                        <th class="columna">Acción</th>
-                      </tr>
-                    <?php
+    <div class="container-fluid">
+
+    <div class="row">
+          <div class="col-xl-3 col-sm-3 mb-5">
+            <div class="card text-white bg-primary o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-comments"></i>
+                </div>
+                <div class="mr-5">Distribuidor!</div>
+              </div>
+              <a class="card-footer text-white clearfix small z-1" href="agregarDistribuidor.php">
+                <span class="float-left" >AGREGAR!</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Area Chart Example-->
+            <div class="card mb-3">
+              <div class="card-header">
+                <i class="fas fa-chart-area" > </i>
+                Distribuidores
+              </div>
+                <div class="card-body">
+                  <table border="1" id="lista" data-titulo="Distribuidores" class="table table-striped table-bordered" width="100%" >
+                    <thead >
+                      <td align="center">Nombre del distribuidor</td>
+                      <td align="center">Email del distribuidor</td>
+                      <td align="center">Categoría del distribuidor</td>
+                      <td align="center">Accion</td>
+                    </thead>
+                    <tbody id="cuerpo">
+                         <?php
 
                         $su = new ServicioUsuario();
                         $arr = $su->getDistribuidores();
@@ -77,19 +93,33 @@ tr:nth-child(even){background-color: #f2f2f2}
                               <td class="columna"><?php echo $distribuidor->email; ?></td>
                               <td class="columna"><?php echo $distribuidor->etiqueta; ?></td>
                                 <td class="columna" style="width: 10%">
-                                  <button style="width:40%;background-color: transparent;" onclick="irEditar(<?php echo $distribuidor->codigo ?>)"><img style="width: 100%;height: 100%" src="../images/edit.png"/></button></td>
+                                  <button  class="btn btn-outline-warning" onclick="irEditar(<?php echo $distribuidor->codigo ?>)">Modificar</button></td>
                             </tr>
                           <?php
                         }
                     ?>
+                    </tbody>
+                    <tfoot>
+                      <td align="center">Nombre del distribuidor</td>
+                      <td align="center">Email del distribuidor</td>
+                      <td align="center">Categoría del distribuidor</td>
+                      <td align="center">Accion</td>
+                    </tfoot>
                   </table>
-                  <form id="formulario" action="editarDistribuidor.php" method="POST">
+                </div>
+              </div>
+              <form id="formulario" action="editarDistribuidor.php" method="POST">
+                <input type="hidden" name="cod_distribuidor" id="in_cod_distribuidor">
+              </form>
 
-                          <input type="hidden" id="in_cod_distribuidor" name="cod_distribuidor" />
-                      </form>
-                </div> 
-              
-        </div>
+      </div>
+    </div>
+      
+
+    <section class="ftco-section bg-light" style="padding: 60px 60px 60px 60px;background-color: white" > 
+<!------ Include the above in your HEAD tag ---------->
+
+        
         
     </section>
 

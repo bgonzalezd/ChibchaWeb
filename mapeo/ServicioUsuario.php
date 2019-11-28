@@ -119,11 +119,18 @@ class ServicioUsuario{
 	}
 
 	public function editUsuario($codigo,$nombre, $nom_usuario, $email){
-		if(($codigo%2)!=0){
-			$result = pg_query($this->conexion, "UPDATE USUARIO SET nombre = '$nombre', nom_usuario = '$nom_usuario' , email = '$email' WHERE codigo = $codigo;");
+		$u = $this->getUserUsername($nom_usuario);
+		if($u == null){
+			if(($codigo%2)!=0){
+				$result = pg_query($this->conexion, "UPDATE USUARIO SET nombre = '$nombre', nom_usuario = '$nom_usuario' , email = '$email' WHERE codigo = $codigo;");
+			}else{
+				$result = pg_query($this->conexion, "SELECT dblink('$this->config','UPDATE USUARIO SET nombre = ''$nombre'' , nom_usuario = ''$nom_usuario'' , email = ''$email'' WHERE codigo = $codigo;');");
+			}
+			return "true";
 		}else{
-			$result = pg_query($this->conexion, "SELECT dblink('$this->config','UPDATE USUARIO SET nombre = ''$nombre'' , nom_usuario = ''$nom_usuario'' , email = ''$email'' WHERE codigo = $codigo;');");
+			return "false";
 		}
+		
 	}
 	public function editPerfil($codigo,$nombre, $clave, $nom_usuario, $email){
 		if(($codigo%2)!=0){

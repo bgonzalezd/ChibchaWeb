@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <?php session_start();
-  include ("../mapeo/ServicioUsuario.php");?>
+  include ("../mapeo/ServicioUsuario.php");
+  include ("../mapeo/ServicioDominio.php");?>
 <html lang="en">
   <head>
-    <title>Usuarios</title>
+    <title>Cuentas</title>
     <?php include("Comun/head.html"); ?>
     <style>
 .mensajes {
@@ -28,7 +29,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 <script type="text/javascript">
   function irEditar(codigo){
     $(document).ready(function(){
-      $('#in_cod_usuario').attr('value',codigo);
+      $('#in_cod_distribuidor').attr('value',codigo);
       document.getElementById('formulario').submit();
     });
   }
@@ -42,55 +43,51 @@ tr:nth-child(even){background-color: #f2f2f2}
     <div id="base" style="background-image: url('../images/fondo.png'); background-size: 100% 100%;">
       
     </div>
+    <h1 style="margin-top: 50px;width: 100%" align="center">Cuentas</h1>
+  <section class="ftco-section bg-light" style="padding: 60px 60px 60px 60px;background-color: white" >
 
-    <h1 style="margin-top: 50px;width: 100%" align="center">Usuarios</h1>  
-
-    <section class="ftco-section bg-light" style="padding: 60px 60px 60px 60px;background-color: white" > 
-        <!-- Area Chart Example-->
-            <div class="card mb-3">
+    <div class="card mb-3">
               <div class="card-header">
                 <i class="fas fa-chart-area"> </i>
-                Usuarios
+                Cuentas
               </div>
                 <div class="card-body">
-                  <table border="1" id="lista" data-titulo="Usuarios" class="table table-striped table-bordered" width="100%" >
+                  <table border="1" id="lista" class="table table-striped table-bordered" width="100%" >
                     <thead >
-                      <td align="center">Nombre completo</td>
-                      <td align="center">Nombre Usuario</td>
-                      <td align="center">Email</td>
-                      <td align="center">Accion</td>
+                      <td align="center">Nombre del distribuidor</td>
+                      <td align="center">Email del distribuidor</td>
+                      <td align="center">Ventas totales</td>
+                      <td align="center">Valor por cobrar</td>
                     </thead>
                     <tbody id="cuerpo">
                          <?php
 
-                        $su = new ServicioUsuario();
-                        $arr = $su->getClientes();
-                        foreach ($arr as $cliente){
+                        $su = new ServicioDominio();
+                        $arr = $su->getCuentas();
+                        foreach ($arr as $texto){
+                          $cuenta = json_decode($texto)
                           ?>
                             <tr class="fila">
-                              <td class="columna"><?php echo $cliente->nombre; ?></td>
-                              <td class="columna"><?php echo $cliente->nom_usuario; ?></td>
-                              <td class="columna"><?php echo $cliente->email; ?></td>
-                                <td class="columna" style="width: 10%">
-                                  <button class="btn btn-outline-warning" onclick="irEditar(<?php echo $cliente->codigo ?>)">Modificar</button></td>
+                              <td class="columna"><?php echo $cuenta->nombre_distribuidor; ?></td>
+                              <td class="columna"><?php echo $cuenta->email; ?></td>
+                              <td class="columna"><?php echo $cuenta->ventas_totales; ?></td>
+                              <td class="columna"><?php echo $cuenta->valor_a_pagar; ?></td>
                             </tr>
                           <?php
                         }
                     ?>
                     </tbody>
                     <tfoot>
-                      <td align="center">Nombre completo</td>
-                      <td align="center">Nombre Usuario</td>
-                      <td align="center">Email</td>
-                      <td align="center">Accion</td>
+                      <td align="center">Nombre del distribuidor</td>
+                      <td align="center">Email del distribuidor</td>
+                      <td align="center">Ventas totales</td>
+                      <td align="center">Valor por cobrar</td>
                     </tfoot>
                   </table>
                 </div>
               </div>
-              <form id="formulario" action="editarUsuario.php" method="POST">
-                <input type="hidden" name="cod_usuario" id="in_cod_usuario">
-              </form>
-        
+      
+
     </section>
 
 

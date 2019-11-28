@@ -12,6 +12,6 @@ $sC = new ServicioUsuario();
 $audi = new ServicioAuditoria();
 $result = $sC->editUsuario($codigo,$nombre,$nom_usuario,$email);
 $audi->addAuditoria('USUARIO','Se ha editado el usuario: ' . $nombre,$_SESSION['cod_user']);
-echo 'Editado correctamente';
+echo $result;
 
 ?>

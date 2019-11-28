@@ -40,18 +40,24 @@ tr:nth-child(even){background-color: #f2f2f2}
     <h1 style="margin-top: 50px;width: 100%" align="center">Auditoria</h1>  
 
     <section class="ftco-section bg-light" style="padding: 60px 60px 60px 60px;background-color: white" > 
-<!------ Include the above in your HEAD tag ---------->
-        <div style=" align-content: center; width: 100%;height: 100%">
-                <div style="overflow-x:auto;max-height: 700px;height: 100%">
-                  <table class="mensajes" style="vertical-align: top;height: 100%;border: 2px solid black">
-                    <tr class="fila">
-                        <th class="columna">Tabla modificada</th>
-                        <th class="columna">Acción realizada</th>
-                        <th class="columna">Usuario</th>
-                        <th class="columna">Email del usuario</th>
-                        <th class="columna">Fecha</th>
-                      </tr>
-                    <?php
+
+        <!-- Area Chart Example-->
+            <div class="card mb-3">
+              <div class="card-header">
+                <i class="fas fa-chart-area"> </i>
+                Auditoria
+              </div>
+                <div class="card-body">
+                  <table border="1" id="lista" data-titulo="Auditoria" class="table table-striped table-bordered" width="100%" >
+                    <thead >
+                      <td align="center">Tabla Modificada</td>
+                      <td align="center">Acción realizada</td>
+                      <td align="center">Usuario</td>
+                      <td align="center">Email del usuario</td>
+                      <td align="center">Fecha</td>
+                    </thead>
+                    <tbody id="cuerpo">
+                         <?php
 
                         $su = new ServicioAuditoria();
                         $arr = $su->getAll();
@@ -68,12 +74,21 @@ tr:nth-child(even){background-color: #f2f2f2}
                           <?php
                         }
                     ?>
+                    </tbody>
+                    <tfoot>
+                      <td align="center">Tabla Modificada</td>
+                      <td align="center">Acción realizada</td>
+                      <td align="center">Usuario</td>
+                      <td align="center">Email del usuario</td>
+                      <td align="center">Fecha</td>
+                    </tfoot>
                   </table>
-                </div> 
-              
-        </div>
+                </div>
+              </div>
         
     </section>
+
+
 
 
     <?php include("Comun/footer.html") ; ?>

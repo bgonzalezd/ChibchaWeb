@@ -36,7 +36,7 @@ tr:nth-child(even){background-color: #f2f2f2}
       
     </div>
 
-    <h1 style="margin-top: 50px;width: 100%" align="center">Nombre de dominios</h1>
+    <h1 style="margin-top: 50px;width: 100%" align="center">Dominios vendidos</h1>
     <table>
         <tr>
           <td>
@@ -45,19 +45,24 @@ tr:nth-child(even){background-color: #f2f2f2}
       </table>   
 
     <section class="ftco-section bg-light" style="padding: 60px 60px 60px 60px;background-color: white" > 
-<!------ Include the above in your HEAD tag ---------->
-        <div style=" align-content: center; width: 100%;height: 100%;background-color: white">
-                <div style="overflow-x:auto;max-height: 700px;height: 100%;background-color: white">
-                    <table class="mensajes" style="vertical-align: top;height: 100%;border: 2px solid black">
-                      <tr class="fila">
-                        <th class="columna">Nombre del usuario</th>
-                        <th class="columna">Correo del usuario</th>
-                        <th class="columna">Nombre de dominio solicitado</th>
-                        <th class="columna">Duración</th>
-                        <th class="columna">Precio</th>
-                        <th class="columna">Renovación</th>
-                      </tr>
-                      <?php
+        <!-- Area Chart Example-->
+            <div class="card mb-3">
+              <div class="card-header">
+                <i class="fas fa-chart-area"> </i>
+                Dominios vendidos
+              </div>
+                <div class="card-body">
+                  <table border="1" id="lista" data-titulo="Dominios vendidos" class="table table-striped table-bordered" width="100%" >
+                    <thead >
+                      <td align="center">Nombre del usuario</td>
+                      <td align="center">Correo del usuario</td>
+                      <td align="center">Nombre de dominio solicitado</td>
+                      <td align="center">Duracion</td>
+                      <td align="center">Precio</td>
+                      <td align="center">Renovación</td>
+                    </thead>
+                    <tbody id="cuerpo">
+                        <?php
 
                         $su = new ServicioDominio();
                         $arr = $su->getActivos($_SESSION['cod_user']);
@@ -75,15 +80,18 @@ tr:nth-child(even){background-color: #f2f2f2}
                           <?php
                         }
                     ?>
-                    </table>
-                    
-                      <form id="formulario" action="editarNombreDominio.php" method="POST">
-
-                          <input type="hidden" id="in_cod_nombre" name="cod_nombre" />
-                      </form>
-                </div> 
-              
-        </div>
+                    </tbody>
+                    <tfoot>
+                      <td align="center">Nombre del usuario</td>
+                      <td align="center">Correo del usuario</td>
+                      <td align="center">Nombre de dominio solicitado</td>
+                      <td align="center">Duracion</td>
+                      <td align="center">Precio</td>
+                      <td align="center">Renovación</td>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
         
     </section>
 

@@ -94,7 +94,7 @@ input[type=submit]:hover {
 
     <section class="ftco-section bg-light" style="padding: 0 0 0 0">
       <div class="container text-center" style="max-width: 800px">
-        <h1 class="mb-3 bread">Editar usuario</h1>
+        <h1 class="mb-3 bread">Editar distribuidor</h1>
         <form action="javascript:registrar()">
           <label for="fname" class="etiqueta">Nombre completo</label>
                   <input type="text" id="fname" name="firstname" required placeholder="Nombre" value="<?php echo $usuario->nombre ?>">
